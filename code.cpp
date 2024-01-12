@@ -14,7 +14,10 @@ const int N = 2e5 + 7;
 
 void solution()
 {
-    cout << "Hi";
+    for (int i = 0; i < 4; i++)
+    {
+        cout << "hi" << endl;
+    }
 }
 
 int main()
