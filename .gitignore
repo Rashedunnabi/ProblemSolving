@@ -4,3 +4,4 @@
 *.prob
 .vscode
 .vscode/
+.code-workspace
