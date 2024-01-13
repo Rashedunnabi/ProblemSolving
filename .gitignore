@@ -2,3 +2,5 @@
 .cph/
 .cph
 *.prob
+.vscode
+.vscode/
