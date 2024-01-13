@@ -14,11 +14,7 @@ const int N = 2e5 + 7;
 
 void solution()
 {
-    for (int i = 0; i < 4; i++)
-    {
-        cout << "hi" << endl;
-        // this is rashed
-    }
+    cout << __gcd(12, 140) << endl;
 }
 
 int main()
