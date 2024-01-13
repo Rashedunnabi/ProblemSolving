@@ -7,16 +7,18 @@ bool vis[N];
 
 void dfs(int vertex)
 {
-    if (vertex)
-        return;
+    // Take action on vertex after entering the vertex
     vis[vertex] = true;
-
     for (auto child : graph[vertex])
     {
-        // or
-        // if(vis[child]) continue;
+        if (vis[child])
+            continue;
+
+        // Take action on child before entering child node
         dfs(child);
+        // Take action on child after exiting child node
     }
+    // Take action on vertex before exiting the vertex
 }
 
 int main()
