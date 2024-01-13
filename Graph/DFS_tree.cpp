@@ -1,21 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 1e3 + 7;
+const int N = 1e5 + 7;
 vector<int> graph[N];
-bool vis[N];
 
-void dfs(int vertex)
+// dfs for tree
+
+void dfs(int vertex, int parent)
 {
-    if (vertex)
-        return;
-    vis[vertex] = true;
-
-    for (auto child : graph[vertex])
+    for (int &child : graph[vertex])
     {
-        // or
-        // if(vis[child]) continue;
-        dfs(child);
+        if (child == parent)
+            continue;
+        dfs(child, vertex);
     }
 }
 
@@ -31,5 +28,8 @@ int main()
         graph[x].push_back(y);
         graph[y].push_back(x);
     }
+
+    dfs(1, 0);
+
     return 0;
 }
