@@ -18,7 +18,6 @@ int dijkstra(int source, int destination)
         st.erase(st.begin());
 
         int vertex = it.second, weight = it.first;
-
         if (vis[vertex])
             continue;
         vis[vertex] = 1;
