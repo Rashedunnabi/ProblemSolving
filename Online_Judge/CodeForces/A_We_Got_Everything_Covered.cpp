@@ -13,6 +13,20 @@ const int N = 2e5 + 7;
 
 void solution()
 {
+    int n, k, i;
+    cin >> n >> k;
+
+    char ch = 'a';
+
+    string s, ans;
+    for (i = 0; i < k; i++)
+    {
+        s.push_back(ch++);
+    }
+
+    for (i = 0; i < n; i++)
+        cout << s;
+    cout << '\n';
 }
 
 int main()

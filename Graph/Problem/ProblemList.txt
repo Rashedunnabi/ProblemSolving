@@ -13,3 +13,9 @@
 13.Greg and Graph --Codeforces
 14.Code Monk Disjoint Set Union - HackerEarth
 15.Shichikuji and Power Grid--CodeForce
+
+Shanket Singh
+Find path exist
+All path between two vertices
+tree cutting--cf
+Secret password-dsu-cf
