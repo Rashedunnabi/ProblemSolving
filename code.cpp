@@ -1,28 +1,50 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Function to reverse the digits of a number
+int reverseDigits(int num)
+{
+    int reversedNum = 0;
+    while (num > 0)
+    {
+        reversedNum = reversedNum * 10 + num % 10;
+        num /= 10;
+    }
+    return reversedNum;
+}
+
+// Function to determine the winner of the game
+string determineWinner(int n, int m, vector<int> &nums)
+{
+    if (m == 0)
+        return "Sasha"; // Sasha wins if m is 0
+
+    for (int num : nums)
+    {
+        if (num >= pow(10, m))
+            return "Sasha"; // Sasha wins if there's a number >= 10^m
+        if (reverseDigits(num) >= pow(10, m))
+            return "Anna"; // Anna wins if there's a number whose reverse is >= 10^m
+    }
+
+    // If neither Sasha nor Anna can win with their optimal moves, it's a draw
+    return "Draw";
+}
+
 int main()
 {
-    cin.tie(nullptr)->sync_with_stdio(false);
-    cout << fixed << setprecision(20);
     int t;
     cin >> t;
-    for (int ti = 0; ti < t; ti += 1)
+    while (t--)
     {
-        int n, k;
-        cin >> n >> k;
-        vector<int> p(n + 1);
-        for (int i = 1, l = 1, r = n; i <= k; i += 1)
+        int n, m;
+        cin >> n >> m;
+        vector<int> nums(n);
+        for (int i = 0; i < n; ++i)
         {
-            for (int j = i; j <= n; j += k)
-            {
-                p[j] = i % 2 ? l++ : r--;
-            }
+            cin >> nums[i];
         }
-        for (int i = 1; i <= n; i += 1)
-        {
-            cout << p[i] << " ";
-        }
-        cout << "\n";
+        cout << determineWinner(n, m, nums) << endl;
     }
+    return 0;
 }

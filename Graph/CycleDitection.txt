@@ -1,0 +1,18 @@
+*******Directed Graph******
+There are several algorithms for detecting cycles in a directed graph. Here are some of the commonly used ones:
+
+Depth First Search (DFS): DFS can be used to detect cycles in a directed graph. During the traversal, if you encounter a back edge (an edge that leads to an already visited vertex), then there is a cycle.
+Tarjan's Algorithm: Tarjan's algorithm is based on strongly connected components (SCCs). It finds all SCCs in the graph, and if any SCC contains more than one vertex, then there is a cycle.
+Kahn's Algorithm: Kahn's algorithm is used for topological sorting, but it can also be used to detect cycles. If during the topological sorting process, we find that not all vertices are visited, then there must be a cycle in the graph.
+Coloring or Marking Algorithm: This algorithm marks vertices as unvisited, visiting, or visited during a DFS traversal. If a vertex is marked as visiting and it is encountered again during the traversal, then there is a cycle.
+Using In-degree: In a directed graph, if we maintain the in-degree of each vertex, we can detect a cycle by continuously removing vertices with zero in-degree. If all vertices are removed and there are still edges remaining, then there is a cycle.
+Floyd's Cycle Detection Algorithm: This algorithm, also known as the "Tortoise and Hare" algorithm, is typically used to detect cycles in linked lists, but it can be adapted to detect cycles in directed graphs as well.
+
+*****Undirected Graph*****
+Detecting cycles in an undirected graph is generally simpler than in a directed graph because there's no notion of directionality to consider. Here are several ways/algorithms to detect cycles in an undirected graph:
+
+Depth First Search (DFS): DFS can be used to detect cycles in an undirected graph. During the traversal, if you encounter an already visited vertex (other than the parent vertex of the current one), then there is a cycle.
+Breadth First Search (BFS): Similar to DFS, BFS can also be used to detect cycles in an undirected graph. If you encounter an already visited vertex (other than the parent vertex of the current one) during the BFS traversal, then there is a cycle.
+Union-Find Algorithm (Disjoint Set Data Structure): This algorithm can be used to detect cycles efficiently in an undirected graph. It keeps track of connected components and merges them. If during the merging process, you encounter two vertices that already belong to the same set, then there is a cycle.
+Backtracking (Recursive Method): This method involves traversing the graph recursively, maintaining a visited set and parent pointer for each vertex. If during the traversal, you encounter an already visited vertex that is not the parent of the current vertex, then there is a cycle.
+Using DFS with Coloring: Similar to the directed graph case, you can use DFS with coloring to detect cycles in an undirected graph. If during the DFS traversal, you encounter an edge to a vertex that is already colored 'gray' (indicating it is being visited), then there is a cycle.
