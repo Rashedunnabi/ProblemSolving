@@ -13,6 +13,21 @@ const int N = 2e5 + 7;
 
 void solution()
 {
+    int a, b;
+    string s;
+    cin >> s;
+    a = b = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        if (s[i] == 'A')
+            a++;
+        else
+            b++;
+    }
+    if (a > b)
+        cout << "A\n";
+    else
+        cout << "B\n";
 }
 
 int main()

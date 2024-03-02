@@ -13,6 +13,12 @@ const int N = 2e5 + 7;
 
 void solution()
 {
+    ll n, sum = 0;
+    cin >> n;
+
+    sum = n * (n + 1) / 2;
+    sum += n - 1;
+    cout << sum << '\n';
 }
 
 int main()

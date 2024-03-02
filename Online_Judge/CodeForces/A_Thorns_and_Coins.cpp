@@ -13,6 +13,24 @@ const int N = 2e5 + 7;
 
 void solution()
 {
+    int n, i, ans = 0;
+    cin >> n;
+    char arr[n];
+    for (i = 0; i < n; i++)
+        cin >> arr[i];
+
+    for (i = 0; i < n; i++)
+    {
+        if (i + 2 < n && arr[i + 2] == '*' && arr[i + 1] == '*')
+        {
+            if (arr[i] == '@')
+                ans++;
+            break;
+        }
+        if (arr[i] == '@')
+            ans++;
+    }
+    cout << ans << '\n';
 }
 
 int main()

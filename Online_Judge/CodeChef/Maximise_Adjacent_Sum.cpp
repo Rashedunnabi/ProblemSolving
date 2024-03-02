@@ -13,6 +13,28 @@ const int N = 2e5 + 7;
 
 void solution()
 {
+    int n, i;
+    cin >> n;
+    deque<int> q;
+    for (i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        q.push_back(x);
+    }
+    sort(q.rbegin(), q.rend());
+    int x = q.back();
+    q.push_front(x);
+    q.pop_back();
+
+    vector<int> v(q.begin(), q.end());
+
+    ll sum = 0ll;
+    for (i = 0; i < n - 1; i++)
+    {
+        sum += v[i] + v[i + 1];
+    }
+    cout << sum << '\n';
 }
 
 int main()

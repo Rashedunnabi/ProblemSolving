@@ -13,6 +13,31 @@ const int N = 2e5 + 7;
 
 void solution()
 {
+    int n, i, c = 0, cc = 0;
+    cin >> n;
+
+    vector<int> arr(n);
+    for (int &i : arr)
+        cin >> i;
+
+    for (i = 1; i < n; i++)
+    {
+        c = 2, cc = arr[i];
+        while (arr[i] <= arr[i - 1])
+        {
+
+            arr[i] = c * cc, c++;
+        }
+    }
+
+    // for (i = 0; i < n; i++)
+    //     cout << arr[i] << ' ';
+    // cout << '\n';
+
+    if (n == 1)
+        cout << arr[0] << '\n';
+    else
+        cout << arr[n - 1] << endl;
 }
 
 int main()
