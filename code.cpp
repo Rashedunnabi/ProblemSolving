@@ -1,60 +1,56 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-#define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
-#define ll long long
-#define all(v) v.begin(), v.end()
-
-void solution()
+typedef long long ll;
+int minOperationsToUnite(const string &s)
 {
-    ll n, time, i;
-    cin >> n >> time;
-
-    vector<pair<ll, ll>> vp;
-    for (i = 0; i < n; i++)
+    map<char, ll> mp;
+    for (char c : s)
+        mp[c]++;
+    ll mini = s.size();
+    for (auto val : mp)
     {
-        int a, b;
-        cin >> a >> b;
-        vp.push_back({a, b});
-    }
-    sort(all(vp));
-
-    ll pre = 0, sum = 0, cnt = 0;
-
-    for (i = 0; i < n; i++)
-    {
-        ll a = vp[i].first, b = vp[i].second;
-
-        if (i == 0)
+        char ch = val.first;
+        int p = val.second;
+        ll m = 0;
+        for (int i = 0; i < p; ++i)
         {
-            if (a > time)
-                break;
-            cnt++;
-            sum += 0LL + a;
-            pre = b;
+            if (s[i] == ch)
+                m++;
         }
-        else
+        mini = min(mini, abs(p - m));
+        for (int i = p; i < s.size(); ++i)
         {
-            if (sum + 0LL + a + abs(b - pre) > time + 0LL)
-            {
-                break;
-            }
-            cnt++;
-            sum += 0LL + a + abs(b - pre);
-            pre = b;
+            if (s[i - p] == ch)
+                m--;
+            if (s[i] == ch)
+                m++;
+            mini = min(mini, abs(p - m));
         }
     }
-    cout << cnt << '\n';
+
+    return mini;
 }
 
 int main()
+
 {
-    Faster;
-    int t = 1;
+
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+
+    int t;
+
     cin >> t;
+
     while (t--)
+
     {
-        solution();
+
+        string s;
+
+        cin >> s;
+
+        cout << minOperationsToUnite(s) << endl;
     }
+
     return 0;
 }

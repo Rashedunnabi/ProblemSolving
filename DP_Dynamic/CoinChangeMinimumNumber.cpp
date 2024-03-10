@@ -2,13 +2,11 @@
 using namespace std;
 
 int dp[100005];
-
 int func(vector<int> &v, int amount)
 {
     if (amount == 0)
         return 0;
     int ans = INT_MAX;
-
     for (int i = 0; i < v.size(); i++)
     {
         if (amount - v[i] >= 0)

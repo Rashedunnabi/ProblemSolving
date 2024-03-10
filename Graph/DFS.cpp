@@ -13,7 +13,6 @@ void dfs(int vertex)
     {
         if (vis[child])
             continue;
-
         // Take action on child before entering child node
         dfs(child);
         // Take action on child after exiting child node
