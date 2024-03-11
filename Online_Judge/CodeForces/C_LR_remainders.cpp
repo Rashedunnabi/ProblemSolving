@@ -3,49 +3,54 @@ using namespace std;
 
 #define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 #define ll long long
+#define yes cout << "YES\n"
+#define no cout << "NO\n"
 #define all(v) v.begin(), v.end()
+#define rall(v) v.rbegin(), v.rend()
+
+const int mod = 1e9 + 7;
+const int N = 2e5 + 7;
 
 void solution()
 {
-    ll n, m, i;
+    int n, m, i;
     cin >> n >> m;
-    vector<ll> ar(n), br(n);
+    deque<int> q;
     for (i = 0; i < n; i++)
     {
-        cin >> ar[i];
-        br[i] = ar[i];
+        int x;
+        cin >> x;
+        q.push_back(x);
     }
     string s;
     cin >> s;
-
-    ll left = 0, right = n - 1, res = 1;
+    vector<int> remove;
     for (i = 0; i < n; i++)
     {
         if (s[i] == 'L')
-            left++;
-        if (s[i] == 'R')
-            right--;
+        {
+            int x = q.front();
+            q.pop_front();
+            remove.push_back(x);
+        }
+        else
+        {
+            int x = q.back();
+            q.pop_back();
+            remove.push_back(x);
+        }
     }
-    reverse(all(s));
-    reverse(all(br));
+    reverse(all(remove));
 
-    left--, right++;
+    vector<int> ans;
+    int prod = 1;
     for (i = 0; i < n; i++)
     {
-        if (s[i] == 'R')
-        {
-            res = (res * 1LL * ar[right++]) % m;
-        }
-        if (s[i] == 'L')
-        {
-            res = (res * 1LL * ar[left--]) % m;
-        }
-        br[i] = res;
-        if (res == 0)
-            res += m;
+        prod = (prod * 1LL * remove[i]) % m;
+        ans.push_back(prod);
     }
-    reverse(all(br));
-    for (auto e : br)
+    reverse(all(ans));
+    for (int &e : ans)
         cout << e << ' ';
     cout << '\n';
 }

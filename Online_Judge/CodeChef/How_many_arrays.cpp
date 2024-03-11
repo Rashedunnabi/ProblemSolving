@@ -4,7 +4,7 @@ using namespace std;
 #define ll long long
 #define MOD 998244353
 
-ll bin_exp(ll x, ll y)
+ll power(ll x, ll y)
 {
     ll res = 1;
     while (y)
@@ -33,6 +33,7 @@ void solve()
                 cnt++;
                 k /= i;
             }
+            cout << "for : " << i << ' ' << cnt << '\n';
             primes.push_back(cnt);
         }
     }
@@ -43,9 +44,9 @@ void solve()
     for (int i = 1; i <= n; i++)
     {
         ll temp = 1;
-        for (auto el : primes)
+        for (auto val : primes)
         {
-            temp *= (bin_exp(el + 1, i) - bin_exp(el, i) + MOD) % MOD;
+            temp *= (power(val + 1, i) - power(val, i) + MOD) % MOD;
             temp %= MOD;
         }
         ans += temp;
@@ -56,16 +57,12 @@ void solve()
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-
-    ll t;
+    ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+    int t;
     cin >> t;
     while (t--)
     {
         solve();
     }
-
     return 0;
 }
