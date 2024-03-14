@@ -3,32 +3,34 @@ using namespace std;
 
 #define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 #define ll long long
+#define all(v) v.begin(), v.end()
 
 void solution()
 {
-    ll n, time, i;
+    int n, time, i, ans = 0;
     cin >> n >> time;
-    vector<pair<ll, ll>> vp(n);
-    for (i = 0; i < n; i++)
-        cin >> vp[i].second >> vp[i].first;
-    sort(vp.begin(), vp.end());
 
-    ll ans = 0;
-    for (i = 0; i < n; i++)
+    vector<pair<int, int>> vp(n);
+    for (auto &it : vp)
+        cin >> it.second >> it.first;
+    sort(all(vp));
+
+    for (int i = 0; i < n; i++)
     {
-        priority_queue<ll> q;
-        ll sum = 0, cnt = 0;
-        for (ll j = i; j < n; j++)
+        priority_queue<ll> pq;
+        ll sum = 0, count = 0;
+        for (ll j = i; j < n; ++j)
         {
-            q.push(vp[j].second);
-            sum += vp[j].second, cnt++;
-            if (sum + vp[j].first - vp[i].first > time)
+            sum += vp[j].second;
+            pq.push(vp[j].second);
+            count++;
+            while (!pq.empty() && (sum + (vp[j].first - vp[i].first)) > time)
             {
-                ll tp = q.top();
-                q.pop();
-                sum -= tp, cnt--;
+                sum -= pq.top();
+                pq.pop();
+                count--;
             }
-            ans = max(ans, cnt);
+            ans = max(ans + 0LL, count);
         }
     }
     cout << ans << '\n';
@@ -37,7 +39,7 @@ void solution()
 int main()
 {
     Faster;
-    ll t = 1;
+    int t = 1;
     cin >> t;
     while (t--)
     {
