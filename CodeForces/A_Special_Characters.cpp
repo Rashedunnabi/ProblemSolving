@@ -15,33 +15,20 @@ void solution()
 {
     int n, i;
     cin >> n;
-    vector<int> v(n);
-    for (int &i : v)
-        cin >> i;
-
-    bool flag = 0;
-    int prev = v[n - 1];
-    for (i = n - 2; i >= 0; i--)
-    {
-        if (v[i] <= prev)
-            prev = v[i];
-        else
-        {
-            int a = v[i] / 10;
-            int b = v[i] % 10;
-            if (a <= b && b <= prev)
-            {
-                prev = a;
-            }
-            else
-                flag = 1;
-        }
-    }
-
-    if (flag)
+    if (n & 1)
         no;
     else
+    {
         yes;
+        for (i = 0; i < n / 2; i++)
+        {
+            if (i & 1)
+                cout << "BB";
+            else
+                cout << "AA";
+        }
+        cout << '\n';
+    }
 }
 
 int main()
