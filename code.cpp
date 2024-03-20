@@ -3,46 +3,6 @@ using namespace std;
 
 #define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 #define ll long long
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
-#define all(v) v.begin(), v.end()
-#define rall(v) v.rbegin(), v.rend()
-
-const int mod = 1e9 + 7;
-const int N = 2e5 + 7;
-
-void solution()
-{
-    int n, i;
-    cin >> n;
-    vector<int> v(n);
-    for (int &i : v)
-        cin >> i;
-
-    bool flag = 0;
-    int prev = v[n - 1];
-    for (i = n - 2; i >= 0; i--)
-    {
-        if (v[i] <= prev)
-            prev = v[i];
-        else
-        {
-            int a = v[i] / 10;
-            int b = v[i] % 10;
-            if (a <= b && b <= prev)
-            {
-                prev = a;
-            }
-            else
-                flag = 1;
-        }
-    }
-
-    if (flag)
-        no;
-    else
-        yes;
-}
 
 int main()
 {
@@ -51,7 +11,38 @@ int main()
     cin >> t;
     while (t--)
     {
-        solution();
+        int n, m, ind;
+        cin >> n >> m;
+
+        vector<int> arr(n);
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+            if (arr[i] == m)
+                ind = i;
+        }
+
+        int lo = 0, hi = n;
+        while ((hi - lo) > 1)
+        {
+            int mid = (hi + lo) / 2;
+            if (arr[mid] <= m)
+                lo = mid;
+            else
+                hi = mid;
+        }
+
+        if (arr[lo] == m)
+        {
+            cout << 0 << endl;
+            continue;
+        }
+        {
+            cout << 1 << endl;
+            int mn = min(ind, lo);
+            int mx = max(ind, lo);
+            cout << mn + 1 << " " << mx + 1 << endl;
+        }
     }
     return 0;
 }

@@ -27,40 +27,20 @@ void solution()
     int lo = 0, hi = n, mid;
     while (hi - lo > 1)
     {
-        mid = (hi + lo) / 2;
+        mid = (lo + hi) / 2;
+
         if (v[mid] <= x)
             lo = mid;
         else
             hi = mid;
     }
-
     if (v[lo] == x)
     {
         cout << 0 << '\n';
         return;
     }
-
-    for (int i = 0; i < n; i++)
-    {
-        swap(v[i], v[ind]);
-        lo = 0, hi = n;
-        while (hi - lo > 1)
-        {
-            mid = (hi + lo) / 2;
-            if (v[mid] <= x)
-                lo = mid;
-            else
-                hi = mid;
-        }
-
-        if (v[lo] == x)
-        {
-            cout << "1\n";
-            cout << i + 1 << ' ' << ind + 1 << '\n';
-            return;
-        }
-        swap(v[i], v[ind]);
-    }
+    cout << "1\n";
+    cout << lo + 1 << ' ' << ind + 1 << '\n';
 }
 
 int main()
