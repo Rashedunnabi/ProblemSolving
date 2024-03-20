@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
@@ -8,31 +7,35 @@ int main()
     cin >> t;
     while (t--)
     {
-        int n, d = INT_MAX, ans = -1;
-        cin >> n;
         string s;
-        cin >> s;
-        vector<int> nums(n + 1, 0);
-        for (int i = 1; i <= n; i++)
-            nums[i] = nums[i - 1] + (s[i - 1] - '0');
+        int n, i;
+        cin >> n >> s;
 
-        for (int i = 0; i <= n; i++)
+        s = '#' + s;
+        int zero = 0, one = count(s.begin(), s.end(), '1'), minVal = INT_MAX, ans = -1;
+
+        for (i = 0; i <= n; i++)
         {
-            int z = i - nums[i];
-            int o = nums[n] - nums[i];
-            int zero = ceil(i / 2.0);
-            int one = ceil((n - i) / 2.0);
-            if (z >= zero && o >= one)
+            if (s[i] == '0')
+                zero++;
+            if (s[i] == '1')
+                one--;
+
+            int nZero = ceil(i / 2.0);
+            int nOne = ceil((n - i) / 2.0);
+            if (zero >= nZero && one >= nOne)
             {
-                int diff = abs(n / 2.0 - i);
-                if (diff < d)
+                int val = abs(2 * i - n);
+                cout << "for: " << i << " : ";
+                cout << abs((n / 2) - i) << ' ' << abs((n / 2.0) - i) << '\n';
+                if (val < minVal)
                 {
-                    d = diff;
+                    minVal = val;
                     ans = i;
                 }
             }
         }
-        cout << (ans == -1 ? 0 : ans) << endl;
+        cout << ans << '\n';
     }
     return 0;
 }
