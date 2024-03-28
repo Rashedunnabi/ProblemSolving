@@ -1,28 +1,30 @@
 #include <bits/stdc++.h>
+using ll = long long;
 using namespace std;
-
-#define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
-#define ll long long
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
-#define all(v) v.begin(), v.end()
-#define rall(v) v.rbegin(), v.rend()
-
-const int mod = 1e9 + 7;
-const int N = 2e5 + 7;
-
-void solution()
-{
-}
-
 int main()
 {
-    Faster;
-    int t = 1;
+    cin.tie(0)->ios::sync_with_stdio(0);
+    int t;
     cin >> t;
     while (t--)
     {
-        solution();
+        int n;
+        cin >> n;
+        vector<int> a(n + 1), b(n + 1);
+        for (int i = 1; i <= n; i++)
+            cin >> a[i];
+        for (int i = 1; i <= n; i++)
+            cin >> b[i];
+        pair<ll, int> ans = {0, 0};
+        priority_queue<ll, vector<ll>, greater<ll>> q;
+        for (int i = n; i > 0; i--)
+        {
+            q.push(a[b[i]]);
+            while (q.size() > i)
+                q.pop();
+            if (q.size() == i)
+                ans = max(ans, make_pair(q.top() * i, -i));
+        }
+        cout << ans.first << " " << -ans.second << "\n";
     }
-    return 0;
 }

@@ -1,76 +1,31 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-#define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
 #define ll long long
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
-#define all(v) v.begin(), v.end()
-#define rall(v) v.rbegin(), v.rend()
-
-const int mod = 1e9 + 7;
-const int N = 2e5 + 7;
-
-void solution()
-{
-    int n, x, i, ind = -1;
-    cin >> n >> x;
-
-    vector<int> v(n);
-    for (i = 0; i < n; i++)
-    {
-        cin >> v[i];
-        if (v[i] == x)
-            ind = i;
-    }
-
-    int lo = 0, hi = n, mid;
-    while (hi - lo > 1)
-    {
-        mid = (hi + lo) / 2;
-        if (v[mid] <= x)
-            lo = mid;
-        else
-            hi = mid;
-    }
-
-    if (v[lo] == x)
-    {
-        cout << 0 << '\n';
-        return;
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        swap(v[i], v[ind]);
-        lo = 0, hi = n;
-        while (hi - lo > 1)
-        {
-            mid = (hi + lo) / 2;
-            if (v[mid] <= x)
-                lo = mid;
-            else
-                hi = mid;
-        }
-
-        if (v[lo] == x)
-        {
-            cout << "1\n";
-            cout << i + 1 << ' ' << ind + 1 << '\n';
-            return;
-        }
-        swap(v[i], v[ind]);
-    }
-}
-
 int main()
 {
-    Faster;
-    int t = 1;
+    ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    int t;
     cin >> t;
     while (t--)
     {
-        solution();
+        ll n;
+        cin >> n;
+        vector<ll> a(n), p(n);
+        for (auto &x : a)
+            cin >> x;
+        for (auto &x : p)
+            cin >> x;
+        pair<ll, ll> ans = {a[0], -1};
+        multiset<ll> st;
+        for (ll i = n - 1; i >= 0; i--)
+        {
+            ll cnt = min(n - i, i + 1);
+            st.insert(a[p[i] - 1]);
+            while (st.size() > cnt)
+                st.erase(st.begin());
+            ans = max(ans, make_pair(*st.begin() * cnt, -cnt));
+        }
+        cout << ans.first << ' ' << -ans.second << endl;
     }
     return 0;
 }
