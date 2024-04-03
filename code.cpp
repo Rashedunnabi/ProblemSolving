@@ -1,41 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
+
+const int N = 1e3 + 7;
+int arr[N];
+bool dp[N];
+
+bool func(int i, int amount)
+{
+    if (amount == 0)
+        return 1;
+    if (i < 0)
+        return 0;
+
+    bool flag = false;
+    flag |= func(i - 1, amount);
+
+    if (amount - arr[i] >= 0)
+        flag |= func(i - 1, amount - arr[i]);
+
+    return dp[amount] = flag;
+}
+
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-    int t = 1;
-    cin >> t;
-    while (t--)
-    {
-        int a, b, c, h = 0, ans = 0;
-        cin >> a >> b >> c;
-        if (a + 1 != c)
-        {
-            cout << -1 << '\n';
-            continue;
-        }
-        while ((1 << h) <= a)
-        {
-            a -= (1 << h);
-            h++;
-        }
 
-        if (!a && !b)
-        {
-            cout << h << '\n';
-            continue;
-        }
+    int n, i, j;
+    cin >> n;
 
-        if (a + b >= (1 << h))
-        {
-            b -= (1 << h);
-            int k = (a + b + c - 1) / c;
-            cout << h + k + 1 << '\n';
-        }
-        else
-        {
-            cout << h + 1 << '\n';
-        }
-    }
+    for (i = 0; i < n; i++)
+        cin >> arr[i];
+
+    int sum = 0;
+    cin >> sum;
+
+    if (func(n - 1, sum))
+        cout << "YES\n";
+    else
+        cout << "NO\n";
+
     return 0;
 }
