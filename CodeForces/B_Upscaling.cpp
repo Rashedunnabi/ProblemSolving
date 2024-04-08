@@ -15,41 +15,20 @@ int main()
 
         for (i = 0; i < n; i++)
         {
-            if (i % 2 == 0)
+            for (j = 0; j < n; j++)
             {
-                for (j = 0; j < n; j++)
-                {
-                    if (j % 2 == 0)
-                        cout << "##";
-                    else
-                        cout << "..";
-                }
-                cout << '\n';
-                for (j = 0; j < n; j++)
-                {
-                    if (j % 2 == 0)
-                        cout << "##";
-                    else
-                        cout << "..";
-                }
+                if ((i + j) & 1)
+                    cout << "..";
+                else
+                    cout << "##";
             }
-            else
+            cout << '\n';
+            for (j = 0; j < n; j++)
             {
-                for (j = 0; j < n; j++)
-                {
-                    if (j % 2 == 0)
-                        cout << "..";
-                    else
-                        cout << "##";
-                }
-                cout << '\n';
-                for (j = 0; j < n; j++)
-                {
-                    if (j % 2 == 0)
-                        cout << "..";
-                    else
-                        cout << "##";
-                }
+                if ((i + j) & 1)
+                    cout << "..";
+                else
+                    cout << "##";
             }
             cout << '\n';
         }

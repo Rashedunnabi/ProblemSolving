@@ -1,43 +1,64 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 1e3 + 7;
-int arr[N];
-bool dp[N];
+#define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
+#define ll long long
+#define all(v) v.begin(), v.end()
 
-bool func(int i, int amount)
+void solution()
 {
-    if (amount == 0)
-        return 1;
-    if (i < 0)
-        return 0;
+    ll n, m, k, i;
+    cin >> n >> m >> k;
 
-    bool flag = false;
-    flag |= func(i - 1, amount);
+    ll arr[n];
+    vector<pair<ll, ll>> vec, ans;
 
-    if (amount - arr[i] >= 0)
-        flag |= func(i - 1, amount - arr[i]);
+    for (ll i = 0; i < n; ++i)
+    {
+        cin >> arr[i];
+        vec.push_back({arr[i], i});
+    }
+    sort(vec.begin(), vec.end());
+    for (ll i = 0; i < n; ++i)
+    {
+        int x = 0;
+        if (k >= m)
+        {
+            x = m;
+            k -= m;
+        }
+        else
+        {
+            x = k;
+            k = 0;
+        }
 
-    return dp[amount] = flag;
+        ans.push_back({vec[i].second, x});
+    }
+
+    sort(ans.begin(), ans.end());
+
+    ll res = 0, taken = 0;
+
+    for (ll i = 0; i < n; ++i)
+    {
+        ll x = ans[i].first;
+        ll y = ans[i].second;
+        res += ((arr[x] + taken) * y);
+        taken += y;
+    }
+
+    cout << res << endl;
 }
 
 int main()
 {
-    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-
-    int n, i, j;
-    cin >> n;
-
-    for (i = 0; i < n; i++)
-        cin >> arr[i];
-
-    int sum = 0;
-    cin >> sum;
-
-    if (func(n - 1, sum))
-        cout << "YES\n";
-    else
-        cout << "NO\n";
-
+    Faster;
+    int t = 1;
+    cin >> t;
+    while (t--)
+    {
+        solution();
+    }
     return 0;
 }
