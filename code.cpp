@@ -1,49 +1,32 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
-
+#define ll long long
 int main()
 {
-    int t;
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+    int t = 1;
     cin >> t;
-
     while (t--)
     {
-        string x, y;
-        cin >> x >> y;
-
-        vector<pair<char, char>> pairs;
-
-        // Finding pairs to swap
-        for (int i = 0; i < x.size(); ++i)
-        {
-            if (x[i] < y[i])
-            {
-                pairs.push_back({x[i], y[i]});
-            }
-        }
-
-        // Sorting the pairs in descending order based on second element
-        sort(pairs.rbegin(), pairs.rend());
-
-        // Swapping elements in x and y
-        for (auto p : pairs)
-        {
-            for (int i = 0; i < x.size(); ++i)
-            {
-                if (x[i] == p.first && y[i] == p.second)
-                {
-                    swap(x[i], y[i]);
-                    break;
-                }
-            }
-        }
-
-        cout << x << endl
-             << y << endl;
+        int n, k;
+        cin >> n >> k;
+        vector<int> v(n);
+        for (auto &e : v)
+            cin >> e;
+        ll lft = (k + 1) / 2;
+        int i = 0;
+        while (i < n && v[i] <= lft)
+            lft -= v[i++];
+        if (i < n)
+            v[i] -= lft;
+        int j = n - 1;
+        ll rft = k / 2;
+        while (j >= i && v[j] <= rft)
+            rft -= v[j--];
+        if (j >= i)
+            cout << n - (j - i + 1) << "\n";
+        else
+            cout << n << "\n";
     }
-
     return 0;
 }
