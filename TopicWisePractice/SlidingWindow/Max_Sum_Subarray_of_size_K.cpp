@@ -1,9 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 class Solution
 {
 public:
-    // paste code here
+    long maximumSumSubarray(int k, vector<int> &arr, int n)
+    {
+        long ans = 0, sum = 0;
+        for (int i = 0; i < k; i++)
+            sum += arr[i];
+        ans = sum;
+        for (int i = k; i < n; i++)
+        {
+            sum += arr[i];
+            sum -= arr[i - k];
+            ans = max(sum, ans);
+        }
+        return ans;
+    }
 };
 
 int main()
