@@ -1,28 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-bool canMakeAllOnes(string &str, int k)
-{
-    string s = str;
-    int i, n = s.length();
-    for (i = 0; i + k <= n; i++)
-    {
-        if (s[i] == '1')
-            continue;
-        for (int j = 0; j < k; j++)
-        {
-            if (s[i + j] == '0')
-                s[i + j] = '1';
-            else
-                s[i + j] = '0';
-        }
-        // cout << s << ' ';
-    }
-
-    // cout << s << ' ' << k << endl;
-    int cnt = count(s.begin(), s.end(), '1');
-    return cnt == n;
-}
 
 int main()
 {
@@ -31,33 +8,33 @@ int main()
     cin >> t;
     while (t--)
     {
-
-        int n;
-        cin >> n;
+        int n, i, ans = 1;
         string s;
-        cin >> s;
-
-        int cnt = count(s.begin(), s.end(), '0');
-        if (cnt == n)
+        cin >> n >> s;
+        for (int k = 2; k <= n; k++)
         {
-            cout << cnt << '\n';
-            continue;
-        }
-
-        int left = 1, right = n;
-        int ans = 1;
-        while (left <= right)
-        {
-            int mid = left + (right - left) / 2;
-            if (canMakeAllOnes(s, mid))
+            vector<int> v(n + 3);
+            int cnt = 0;
+            for (i = 0; i <= n - k; i++)
             {
-                ans = mid;
-                left = mid + 1;
+                if ((cnt + s[i] - '0') % 2 == 0)
+                {
+                    cnt++;
+                    v[i + k - 1] = 1;
+                }
+                cnt -= v[i];
             }
-            else
+            bool flag = true;
+            for (; i < n; i++) // i = n - k + 1
             {
-                right = mid - 1;
+                if ((cnt + s[i] - '0') % 2 == 0)
+                {
+                    flag = false;
+                }
+                cnt -= v[i];
             }
+            if (flag)
+                ans = k;
         }
         cout << ans << '\n';
     }

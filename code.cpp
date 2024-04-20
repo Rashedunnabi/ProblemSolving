@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define ll long long
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
@@ -8,25 +7,34 @@ int main()
     cin >> t;
     while (t--)
     {
-        int n, k;
-        cin >> n >> k;
+        int n;
+        string s;
+        cin >> n >> s;
+        int ans = 1;
         vector<int> v(n);
-        for (auto &e : v)
-            cin >> e;
-        ll lft = (k + 1) / 2;
-        int i = 0;
-        while (i < n && v[i] <= lft)
-            lft -= v[i++];
-        if (i < n)
-            v[i] -= lft;
-        int j = n - 1;
-        ll rft = k / 2;
-        while (j >= i && v[j] <= rft)
-            rft -= v[j--];
-        if (j >= i)
-            cout << n - (j - i + 1) << "\n";
-        else
-            cout << n << "\n";
+        for (int k = 2; k <= n; k++)
+        {
+            fill(v.begin(), v.end(), 0);
+            int cnt = 0;
+            for (int i = 0; i <= n - k; i++)
+            {
+                if ((cnt + (s[i] - '0')) % 2 == 0)
+                {
+                    cnt ^= 1;
+                    v[i + k - 1] = 1;
+                }
+                cnt ^= v[i];
+            }
+            int check = 1;
+            for (int i = n - k + 1; i < n; i++)
+            {
+                check &= ((cnt + (s[i] - '0')) % 2 == 1);
+                cnt ^= v[i];
+            }
+            if (check)
+                ans = k;
+        }
+        cout << ans << "\n";
     }
     return 0;
 }
