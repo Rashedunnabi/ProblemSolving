@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
@@ -8,23 +7,26 @@ int main()
     cin >> t;
     while (t--)
     {
-        int n, i;
+        int n, i, mex = 0;
         cin >> n;
-        int ar[n];
-        for (i = 0; i < n; i++)
-            cin >> ar[i];
-
-        set<int> s;
-
-        vector<int> ans;
-        int mex = 0;
-
+        vector<int> ans(n);
+        vector<bool> vis(n + 1);
         for (i = 0; i < n; i++)
         {
-            if (s.find(mex) == s.end())
-            {
-            }
+            int x;
+            cin >> x;
+            if (x >= 0)
+                ans[i] = mex;
+            else
+                ans[i] = mex - x;
+
+            vis[ans[i]] = 1;
+            while (vis[mex])
+                mex++;
         }
+        for (auto val : ans)
+            cout << val << ' ';
+        cout << '\n';
     }
     return 0;
 }

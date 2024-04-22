@@ -13,29 +13,20 @@ int main()
         int n, k, i;
         cin >> n >> k;
 
-        if (n == k)
+        if (k == 1)
         {
-            for (i = 1; i <= n; i++)
-            {
+            for (i = 0; i < n; i++)
+                cout << i + 1 << ' ';
+            cout << '\n';
+        }
+        else if (k == n)
+        {
+            for (i = 0; i < n; i++)
                 cout << 1 << ' ';
-            }
             cout << '\n';
         }
         else
-        {
-            if (k == 1)
-            {
-                for (i = 1; i <= n; i++)
-                {
-                    cout << i << ' ';
-                }
-                cout << '\n';
-            }
-            else
-            {
-                cout << -1 << '\n';
-            }
-        }
+            cout << -1 << '\n';
     }
     return 0;
 }
