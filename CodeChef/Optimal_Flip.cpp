@@ -2,15 +2,6 @@
 using namespace std;
 #define int long long
 
-int func(int x, int i)
-{
-    int left = i - 1, right = x - i;
-    int temp = x * (x + 1) / 2;
-    temp -= (left * (left + 1) / 2);
-    temp -= (right * (right + 1) / 2);
-    return temp;
-}
-
 int32_t main()
 {
     ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
@@ -37,16 +28,24 @@ int32_t main()
         if (cnt)
             odd.push_back(cnt);
 
+        // sort(odd.rbegin(), odd.rend());
+
         int ans = n * (n + 1) / 2;
+
         for (int x : odd)
             ans -= (x * (x + 1) / 2);
 
         int maxAns = ans;
         for (int x : odd)
         {
-            int i = x / 2;
-            maxAns = max(maxAns, ans + func(x, i));
-            maxAns = max(maxAns, ans + func(x, i + 1));
+            for (int i = 1; i <= x; i++)
+            {
+                int left = i - 1, right = x - i;
+                int temp = x * (x + 1) / 2;
+                temp -= (left * (left + 1) / 2);
+                temp -= (right * (right + 1) / 2);
+                maxAns = max(maxAns, ans + temp);
+            }
         }
         cout << maxAns << '\n';
     }
