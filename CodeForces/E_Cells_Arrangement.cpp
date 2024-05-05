@@ -1,37 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-#define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
-#define ll long long
-
-void solution()
+int32_t main()
 {
-    int n;
-    cin >> n;
-
-    cout << "1 1\n";
-    cout << n << ' ' << n << '\n';
-    n -= 2;
-    if (n)
-    {
-        cout << "1 2\n";
-        n--;
-    }
-
-    for (int i = 3; n; i++, n--)
-        cout << i << ' ' << 1 << '\n';
-
-    cout << '\n';
-}
-
-int main()
-{
-    Faster;
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
     int t = 1;
     cin >> t;
     while (t--)
     {
-        solution();
+        int n, i;
+        cin >> n;
+        for (i = 1; i <= n; i++)
+        {
+            if (i != 2)
+                cout << i << ' ' << i << '\n';
+        }
+        cout << 2 << ' ' << 1 << '\n';
     }
     return 0;
 }

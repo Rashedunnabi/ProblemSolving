@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-#define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
+#define int long long
 
 void computeLPSArray(string &pat, int M, int *lps)
 {
@@ -67,27 +66,47 @@ vector<int> KMPSearch(string &pat, string &txt)
     // its size it the number of count where the pattern appear
 }
 
-void solution()
+bool check(string &s, int len, int k)
 {
-    string pi = "pie", mp = "map", pimp = "mapie";
-    int n, i;
-    cin >> n;
-    string s;
-    cin >> s;
+    string pat = s.substr(0, len);
+    vector<int> v = KMPSearch(pat, s);
 
-    // pattern,text
-    int ans = KMPSearch(pi, s).size();
-    cout << ans << '\n';
+    int cnt = 1, pre = v[0];
+    for (int i = 1; i < v.size(); i++)
+    {
+        if (v[i] >= pre + len)
+        {
+            cnt++;
+            pre = v[i];
+        }
+    }
+    return cnt >= k;
 }
 
-int main()
+int32_t main()
 {
-    Faster;
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
     int t = 1;
     cin >> t;
     while (t--)
     {
-        solution();
+        int n, l, r, i;
+        string s;
+        cin >> n >> l >> r >> s;
+
+        int lo = 1, hi = n, mid, ans = 0;
+        while (lo <= hi)
+        {
+            mid = (lo + hi) >> 1;
+            if (check(s, mid, l))
+            {
+                ans = mid;
+                lo = mid + 1;
+            }
+            else
+                hi = mid - 1;
+        }
+        cout << ans << '\n';
     }
     return 0;
 }

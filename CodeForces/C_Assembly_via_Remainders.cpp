@@ -12,17 +12,11 @@ int32_t main()
     {
         int n, i;
         cin >> n;
-        vector<int> v(n - 1), ans(1, 10000);
+        vector<int> v(n - 1), ans(1, 200000);
         for (int &i : v)
             cin >> i;
-
-        for (i = 0; i < n - 1; i++)
-            ans.push_back(ans.back() + v[i]);
-
-        // for (i = 1; i < ans.size(); i++)
-        //     cout << ans[i] % ans[i - 1] << ' ';
-        // cout << '\n';
-
+        for (int &i : v)
+            ans.push_back(ans.back() + i);
         for (auto val : ans)
             cout << val << ' ';
         cout << '\n';

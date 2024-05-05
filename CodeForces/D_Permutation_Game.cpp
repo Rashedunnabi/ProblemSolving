@@ -1,56 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-#define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
-#define ll long long
-
-void solution()
+#define int long long
+int32_t main()
 {
-    ll i, n, k, b, s;
-    cin >> n >> k >> b >> s;
-
-    vector<ll> p(n), a(n);
-    for (ll &i : p)
-        cin >> i;
-    for (ll &i : a)
-        cin >> i;
-
-    ll sz = min(n, k), posB = b - 1, posS = s - 1;
-
-    vector<ll> vb, vs;
-    for (i = 0; i < sz; i++)
-    {
-        vb.push_back(a[posB]);
-        vs.push_back(a[posS]);
-        posB = p[posB] - 1;
-        posS = p[posS] - 1;
-    }
-
-    ll sumB = 0, sumS = 0, bob = 0, sasha = 0;
-    for (i = 0; i < sz; i++)
-    {
-        sumB += vb[i];
-        sumS += vs[i];
-        bob = max(bob, sumB + (k - i - 1) * vb[i]);
-        sasha = max(sasha, sumS + (k - i - 1) * vs[i]);
-    }
-
-    if (bob == sasha)
-        cout << "Draw\n";
-    else if (bob < sasha)
-        cout << "Sasha\n";
-    else
-        cout << "Bodya\n";
-}
-
-int main()
-{
-    Faster;
-    ll t = 1;
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+    int t = 1;
     cin >> t;
     while (t--)
     {
-        solution();
+        int n, k, b, s, i, bodya = 0, sasha = 0, sumB = 0, sumS = 0;
+        cin >> n >> k >> b >> s;
+        b--, s--;
+
+        vector<int> p(n), a(n), vb(n), vs(n);
+        for (int &i : p)
+            cin >> i, i--;
+        for (int &i : a)
+            cin >> i;
+
+        for (i = 0; i < n; i++)
+        {
+            vb[i] = a[b], vs[i] = a[s];
+            b = p[b], s = p[s];
+        }
+
+        for (i = 0; i < min(n, k); i++)
+        {
+            sumB += vb[i], sumS += vs[i];
+            bodya = max(bodya, sumB + (k - i - 1) * vb[i]);
+            sasha = max(sasha, sumS + (k - i - 1) * vs[i]);
+        }
+        if (bodya == sasha)
+            cout << "Draw\n";
+        else if (bodya < sasha)
+            cout << "Sasha\n";
+        else
+            cout << "Bodya\n";
     }
     return 0;
 }
