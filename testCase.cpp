@@ -1,81 +1,136 @@
 #include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-#define pf push_front
-#define pob pop_back
-#define pof pop_front
-#define ff first
-#define ss second
-#define PLL pair<ll, ll>
-#define pii pair<int, int>
-#define SetBit(x, k) (x |= (1LL << k))
-#define ClearBit(x, k) (x &= ~(1LL << k))
-#define CheckBit(x, k) (x & (1LL << k))
-#define scn(n) scanf("%d", &n)
-#define scnll(n) scanf("%lld", &n)
-#define nl cout << "\n"
-#define YES cout << "YES\n"
-#define Yes cout << "Yes\n"
-#define yes cout << "yes\n"
-#define NO cout << "NO\n"
-#define No cout << "No\n"
-#define no cout << "no\n"
-#define mod 1000000009LL
-#define mod1 1000000007LL
-#define mod2 1000000009LL
-#define inf 1000000000000000LL
-#define N 1000010
-#define fastio                             \
-    std::ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                         \
-    cout.tie(NULL);
 using namespace std;
+#define int long long
+#define FOR(i, n) for (int i = 0; i < n; i++)
+#define F first
+#define S second
 
-int main()
+struct Assistant
 {
-    fastio;
-    int t, ts = 1;
-    cin >> t;
-    while (t--)
+    int workTime, batchSize, refillTime;
+};
+
+// Calculate the maximum number of balloons that can be produced in given time
+int maxBalloonsProduced(int workTime, int batchSize, int refillTime, int totalTime)
+{
+    int batchDuration = (batchSize * workTime) + refillTime;
+    int batchCount = totalTime / batchDuration;
+    int remainingTime = totalTime % batchDuration;
+    int totalBalloons = batchCount * batchSize;
+    if (remainingTime != 0)
     {
-        ll n;
-        cin >> n;
-        string s;
-        cin >> s;
-        int inv[n + 2];
-        int ans = 0;
-        for (int i = n; i > 0; i--)
+        if (remainingTime / workTime >= batchSize)
         {
-            for (int j = 0; j <= n; j++)
+            totalBalloons += batchSize;
+        }
+        else
+        {
+            totalBalloons += remainingTime / workTime;
+        }
+    }
+    return totalBalloons;
+}
+
+// Check if producing given number of balloons is possible in given time
+bool isBalloonProductionPossible(int workTime, int batchSize, int refillTime, int balloons, int totalTime)
+{
+    int batchDuration = (batchSize * workTime) + refillTime;
+    int batches = balloons / batchSize;
+    bool ok = (balloons % batchSize == 0) ? 1 : 0;
+    int currentTime = 0;
+    if (ok)
+    {
+        batches -= 1;
+        currentTime = (batchDuration * batches) + (batchSize * workTime);
+    }
+    else
+    {
+        currentTime = (batchDuration * batches) + ((balloons % batchSize) * workTime);
+    }
+    return (currentTime <= totalTime);
+}
+
+// Check if producing required number of balloons is possible by all assistants in given time
+bool isProductionPossible(Assistant *assistants, int numAssistants, int requiredBalloons, int totalTime)
+{
+    int totalBalloons = 0;
+    FOR(i, numAssistants)
+    {
+        int workTime = assistants[i].workTime;
+        int batchSize = assistants[i].batchSize;
+        int refillTime = assistants[i].refillTime;
+        int lo = 0, hi = (int)1e9;
+        while (hi > lo + 1)
+        {
+            int balloons = (lo + hi) >> 1;
+            if (isBalloonProductionPossible(workTime, batchSize, refillTime, balloons, totalTime))
             {
-                inv[j] = 0;
+                lo = balloons;
             }
-            int cnt = 0;
-            for (int j = 0; j + i <= n; j++)
+            else
             {
-                if ((cnt + s[j] - '0') % 2 == 0)
-                {
-                    inv[j + i - 1] = 1;
-                    cnt++;
-                }
-                cnt -= inv[j];
-            }
-            bool is_possible = true;
-            for (int j = n - i + 1; j < n; j++)
-            {
-                if ((cnt + s[j] - '0') % 2 == 0)
-                {
-                    is_possible = false;
-                    break;
-                }
-                cnt -= inv[j];
-            }
-            if (is_possible)
-            {
-                ans = i;
-                break;
+                hi = balloons;
             }
         }
-        cout << ans << "\n";
+        totalBalloons += lo;
     }
+    return (totalBalloons >= requiredBalloons);
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(0);
+    int requiredBalloons, numAssistants;
+    cin >> requiredBalloons >> numAssistants;
+    Assistant assistants[numAssistants];
+    FOR(i, numAssistants)
+    {
+        cin >> assistants[i].workTime >> assistants[i].batchSize >> assistants[i].refillTime;
+    }
+    int minTime = -1, maxTime = (int)1e9;
+    while (maxTime > minTime + 1)
+    {
+        int totalTime = (minTime + maxTime) >> 1;
+        if (isProductionPossible(assistants, numAssistants, requiredBalloons, totalTime))
+        {
+            maxTime = totalTime;
+        }
+        else
+        {
+            minTime = totalTime;
+        }
+    }
+    cout << maxTime << '\n';
+    int balloonsProduced[numAssistants];
+    memset(balloonsProduced, 0, sizeof balloonsProduced);
+    FOR(i, numAssistants)
+    {
+        int workTime = assistants[i].workTime;
+        int batchSize = assistants[i].batchSize;
+        int refillTime = assistants[i].refillTime;
+        balloonsProduced[i] = maxBalloonsProduced(workTime, batchSize, refillTime, maxTime);
+    }
+    int totalBalloons = 0;
+    FOR(i, numAssistants)
+    {
+        if (totalBalloons + balloonsProduced[i] <= requiredBalloons)
+        {
+            cout << balloonsProduced[i] << " ";
+            totalBalloons += balloonsProduced[i];
+        }
+        else
+        {
+            if (totalBalloons == requiredBalloons)
+            {
+                cout << 0 << " ";
+            }
+            else
+            {
+                cout << (requiredBalloons - totalBalloons) << " ";
+                totalBalloons = requiredBalloons;
+            }
+        }
+    }
+    cout << '\n';
+    return 0;
 }
