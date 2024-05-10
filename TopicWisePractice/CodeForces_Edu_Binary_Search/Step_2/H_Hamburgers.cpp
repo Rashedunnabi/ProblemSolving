@@ -39,7 +39,7 @@ int main()
     for (i = 0; i < n; i++)
         mp[s[i]]++;
 
-    ll lo = 0, hi = 2e14, mid; // by default you can set hi 2e14
+    ll lo = 0, hi = 2e13, mid; // by default you can set hi 1e12+101 or 1e13
 
     // finind high value
     for (ll i = 0; i < 62; i++)
