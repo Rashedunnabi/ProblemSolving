@@ -1,29 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
-double findRoot(double x)
+
+#define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
+#define ll long long
+#define yes cout << "YES\n"
+#define no cout << "NO\n"
+#define all(v) v.begin(), v.end()
+#define rall(v) v.rbegin(), v.rend()
+
+const int mod = 1e9 + 7;
+const int N = 2e5 + 7;
+
+void solution()
 {
-    double hi = max(1.0, x / 2), lo = 0, mid;
-    for (int i = 0; i <= 64; i++)
-    {
-        mid = (hi + lo) / 2;
-        if (mid * mid > x)
-            hi = mid;
-        else
-            lo = mid;
-    }
-    return lo;
 }
 
 int main()
 {
-    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+    Faster;
     int t = 1;
     cin >> t;
     while (t--)
     {
-        double n;
-        cin >> n;
-        cout << fixed << setprecision(10) << findRoot(n) << '\n';
+        solution();
     }
     return 0;
 }
