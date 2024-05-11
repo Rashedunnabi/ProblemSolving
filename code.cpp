@@ -1,28 +1,34 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
+
 using namespace std;
 
-#define Faster ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL)
-#define ll long long
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
-#define all(v) v.begin(), v.end()
-#define rall(v) v.rbegin(), v.rend()
-
-const int mod = 1e9 + 7;
-const int N = 2e5 + 7;
-
-void solution()
+int countLatticePoints(int r)
 {
+    int count = 0;
+    for (int x = 0; x <= r + 1; ++x)
+    {
+        for (int y = 0; y <= r + 1; ++y)
+        {
+            if (x * x + y * y >= r * r && x * x + y * y < (r + 1) * (r + 1))
+            {
+                cout << x << ' ' << y << '\n';
+                ++count;
+            }
+        }
+    }
+    return 4 * count;
 }
 
 int main()
 {
-    Faster;
-    int t = 1;
+    int t;
     cin >> t;
     while (t--)
     {
-        solution();
+        int r;
+        cin >> r;
+        cout << countLatticePoints(r) << endl;
     }
     return 0;
 }
