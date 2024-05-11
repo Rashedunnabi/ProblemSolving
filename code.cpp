@@ -1,34 +1,50 @@
-#include <iostream>
-#include <cmath>
-
+#include <bits/stdc++.h>
 using namespace std;
+#define ll long long
 
-int countLatticePoints(int r)
+const double EPSILON = 1e-9;
+
+bool check(double time, vector<int> &position, vector<int> &velocity)
 {
-    int count = 0;
-    for (int x = 0; x <= r + 1; ++x)
+    double mini = -1e12, maxi = 1e12;
+
+    for (int i = 0; i < position.size(); i++)
     {
-        for (int y = 0; y <= r + 1; ++y)
-        {
-            if (x * x + y * y >= r * r && x * x + y * y < (r + 1) * (r + 1))
-            {
-                cout << x << ' ' << y << '\n';
-                ++count;
-            }
-        }
+        double left = position[i] + velocity[i] * time;
+        double right = position[i] - velocity[i] * time;
+        mini = max(mini, right);
+        maxi = min(maxi, left);
     }
-    return 4 * count;
+    return mini < maxi;
 }
 
 int main()
 {
-    int t;
-    cin >> t;
-    while (t--)
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL), cout.tie(NULL);
+
+    ll n;
+    cin >> n;
+    vector<int> position(n), velocity(n);
+    for (int i = 0; i < n; i++)
+        cin >> position[i] >> velocity[i];
+
+    double lo = 0.0, hi = 2e9;
+    double result = -1.0;
+
+    for (int i = 0; i < 100; i++)
     {
-        int r;
-        cin >> r;
-        cout << countLatticePoints(r) << endl;
+        double mid = (lo + hi) / 2.0;
+        if (check(mid, position, velocity))
+        {
+            result = mid;
+            hi = mid;
+        }
+        else
+        {
+            lo = mid;
+        }
     }
+    cout << fixed << setprecision(10) << result << '\n';
     return 0;
 }

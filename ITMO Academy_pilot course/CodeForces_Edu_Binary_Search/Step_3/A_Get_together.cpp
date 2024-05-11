@@ -2,8 +2,17 @@
 using namespace std;
 #define ll long long
 
-bool check(double mid, vector<int> &position, vector<int> &valocity)
+bool check(double time, vector<int> &position, vector<int> &valocity)
 {
+    double mini = -1e12, maxi = 1e12;
+    for (int i = 0; i < position.size(); i++)
+    {
+        double right = position[i] + valocity[i] * time;
+        double left = position[i] - valocity[i] * time;
+        mini = max(mini, left);
+        maxi = min(maxi, right);
+    }
+    return mini < maxi;
 }
 
 int main()
@@ -16,7 +25,7 @@ int main()
     for (i = 0; i < n; i++)
         cin >> position[i] >> valocity[i];
 
-    double lo = 0.0, hi = 1e10, mid;
+    double lo = 0.0, hi = 2e9 + 100, mid;
     for (int i = 0; i <= 100; i++)
     {
         mid = (lo + hi) / 2.0;
@@ -25,6 +34,7 @@ int main()
         else
             lo = mid;
     }
+    cout << fixed << setprecision(10) << hi << '\n';
 
     return 0;
 }
