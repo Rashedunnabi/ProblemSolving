@@ -1,50 +1,59 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
-#define ll long long
-
-const double EPSILON = 1e-9;
-
-bool check(double time, vector<int> &position, vector<int> &velocity)
+int build_num(int bit[])
 {
-    double mini = -1e12, maxi = 1e12;
+    int ans = 0;
+    for (int i = 0; i < 32; i++)
+        if (bit[i])
+            ans += (1 << i);
 
-    for (int i = 0; i < position.size(); i++)
+    return ans;
+}
+bool maximumOR(int arr[], int n, int k)
+{
+    int bit[32] = {0};
+    for (int i = 0; i < k; i++)
     {
-        double left = position[i] + velocity[i] * time;
-        double right = position[i] - velocity[i] * time;
-        mini = max(mini, right);
-        maxi = min(maxi, left);
+        for (int j = 0; j < 32; j++)
+        {
+            if (arr[i] & (1 << j))
+                bit[j]++;
+        }
     }
-    return mini < maxi;
+
+    int preOr = build_num(bit);
+
+    for (int i = k; i < n; i++)
+    {
+        for (int j = 0; j < 32; j++)
+        {
+            if (arr[i - k] & (1 << j))
+                bit[j]--;
+        }
+        for (int j = 0; j < 32; j++)
+        {
+            if (arr[i] & (1 << j))
+                bit[j]++;
+        }
+        int newOr = build_num(bit);
+        if (newOr != preOr)
+            return false;
+    }
+    return true;
 }
 
+// Driver Code
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL), cout.tie(NULL);
+    // Given array arr[]
+    int arr[] = {2, 5, 3, 6, 11, 13};
 
-    ll n;
-    cin >> n;
-    vector<int> position(n), velocity(n);
-    for (int i = 0; i < n; i++)
-        cin >> position[i] >> velocity[i];
+    // Given subarray size K
+    int k = 3;
+    int n = sizeof arr / sizeof arr[0];
 
-    double lo = 0.0, hi = 2e9;
-    double result = -1.0;
+    // Function Call
+    cout << maximumOR(arr, n, k);
 
-    for (int i = 0; i < 100; i++)
-    {
-        double mid = (lo + hi) / 2.0;
-        if (check(mid, position, velocity))
-        {
-            result = mid;
-            hi = mid;
-        }
-        else
-        {
-            lo = mid;
-        }
-    }
-    cout << fixed << setprecision(10) << result << '\n';
     return 0;
 }
