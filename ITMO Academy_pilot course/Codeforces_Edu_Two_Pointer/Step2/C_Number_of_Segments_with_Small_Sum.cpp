@@ -11,17 +11,16 @@ int main()
     for (ll &i : v)
         cin >> i;
 
-    ll i, j, sum, ans;
-    i = j = sum = ans = 0;
-
-    while (i < n)
+    ll i = 0, j = 0, sum = 0, ans = 0;
+    for (i = 0; i < n; i++)
     {
-        while (sum < target)
-        {
-            sum += v[j++];
-            ans = max(ans, j - i);
-        }
+        sum += v[i];
+        while (sum > target)
+            sum -= v[j++];
+        if (sum <= target)
+            ans += (i - j + 1);
     }
+    cout << ans << '\n';
 
     return 0;
 }
