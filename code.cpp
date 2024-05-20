@@ -1,37 +1,34 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 int build_num(int bit[])
 {
     int ans = 0;
-    for (int i = 0; i < 32; i++)
+    for (int i = 0; i < 21; i++)
         if (bit[i])
             ans += (1 << i);
 
     return ans;
 }
-bool maximumOR(int arr[], int n, int k)
+bool check(int k, vector<int> &arr)
 {
-    int bit[32] = {0};
+    int n = arr.size();
+
+    int bit[21] = {0};
     for (int i = 0; i < k; i++)
     {
-        for (int j = 0; j < 32; j++)
+        for (int j = 0; j < 21; j++)
         {
             if (arr[i] & (1 << j))
                 bit[j]++;
         }
     }
-
     int preOr = build_num(bit);
-
     for (int i = k; i < n; i++)
     {
-        for (int j = 0; j < 32; j++)
+        for (int j = 0; j < 21; j++)
         {
             if (arr[i - k] & (1 << j))
                 bit[j]--;
-        }
-        for (int j = 0; j < 32; j++)
-        {
             if (arr[i] & (1 << j))
                 bit[j]++;
         }
@@ -42,18 +39,28 @@ bool maximumOR(int arr[], int n, int k)
     return true;
 }
 
-// Driver Code
 int main()
 {
-    // Given array arr[]
-    int arr[] = {2, 5, 3, 6, 11, 13};
+    int t = 1;
+    scanf("%d", &t);
+    while (t--)
+    {
+        int n, i;
+        scanf("%d", &t);
+        vector<int> v(n);
+        for (i = 0; i < n; i++)
+            scanf("%d", &v[i]);
 
-    // Given subarray size K
-    int k = 3;
-    int n = sizeof arr / sizeof arr[0];
-
-    // Function Call
-    cout << maximumOR(arr, n, k);
-
+        int lo = 0, hi = n, mid;
+        while (hi - lo > 1)
+        {
+            mid = lo + (hi - lo) / 2;
+            if (check(mid, v))
+                hi = mid;
+            else
+                lo = mid;
+        }
+        printf("%d\n", hi);
+    }
     return 0;
 }
