@@ -1,68 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
-
-ll give(ll p, ll q, ll r, ll s)
+#define yes cout << "YES\n"
+#define no cout << "NO\n"
+int main()
 {
-    ll dif = max({p, q, r, s}) - min({p, q, r, s});
-    return dif;
-}
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+    vector<pair<int, int>> vp;
+    vp.push_back({2, 5});
 
-vector<ll> TakeInput(ll n)
-{
-    vector<ll> v(n);
-    for (ll &i : v)
-        cin >> i;
-    sort(v.begin(), v.end());
-    return v;
-}
-
-signed main()
-{
-    ios_base::sync_with_stdio(0), cin.tie(0);
-
-    ll n1, n2, n3, n4;
-    cin >> n1;
-    vector<ll> caps = TakeInput(n1);
-    cin >> n2;
-    vector<ll> shirts = TakeInput(n2);
-    cin >> n3;
-    vector<ll> pants = TakeInput(n3);
-    cin >> n4;
-    vector<ll> shoes = TakeInput(n4);
-
-    ll i1 = 0, i2 = 0, i3 = 0, i4 = 0, mn = LLONG_MAX, a = -1, b = -1, c = -1, d = -1;
-    while (i1 < n1 && i2 < n2 && i3 < n3 && i4 < n4)
+    for (auto [u, v] : vp)
     {
-        ll diff = give(caps[i1], shirts[i2], pants[i3], shoes[i4]);
-        if (diff < mn)
-        {
-            mn = diff;
-            a = i1, b = i2, c = i3, d = i4;
-        }
-
-        if (caps[i1] <= shirts[i2] && caps[i1] <= pants[i3] && caps[i1] <= shoes[i4])
-            i1++;
-
-        else if (shirts[i2] <= caps[i1] && shirts[i2] <= pants[i3] && shirts[i2] <= shoes[i4])
-            i2++;
-
-        else if (pants[i3] <= shirts[i2] && pants[i3] <= caps[i1] && pants[i3] <= shoes[i4])
-            i3++;
-
-        else if (shoes[i4] <= caps[i1] && shoes[i4] <= shirts[i2] && shoes[i4] <= pants[i3])
-            i4++;
+        cout << u << ' ' << v << '\n';
     }
-    ll diff = LLONG_MIN;
-    diff = max(diff, abs(shirts[i2] - caps[i1]));
-    diff = max(diff, abs(pants[i3] - shirts[i2]));
-    diff = max(diff, abs(shoes[i4] - pants[i3]));
-    if (diff < mn)
-    {
-        mn = diff;
-        a = i1, b = i2, c = i3, d = i4;
-    }
-    cout << caps[a] << " " << shirts[b] << " " << pants[c] << " " << shoes[d] << "\n";
-
     return 0;
 }
