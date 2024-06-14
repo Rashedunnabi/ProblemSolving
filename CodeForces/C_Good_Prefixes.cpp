@@ -1,10 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
-#define all(v) v.begin(), v.end()
-#define rall(v) v.rbegin(), v.rend()
 int32_t main()
 {
     ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
@@ -20,13 +16,11 @@ int32_t main()
 
         for (i = 0; i < n; i++)
         {
-            if (v[i] > maxi)
-                maxi = v[i];
+            maxi = max(maxi, v[i]);
             sum += v[i];
-            if (maxi == sum - maxi || (!sum && !v[i]))
+            if (maxi == sum - maxi)
                 cnt++;
         }
-
         cout << cnt << endl;
     }
     return 0;

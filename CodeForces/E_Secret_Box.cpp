@@ -1,12 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
-#define all(v) v.begin(), v.end()
-#define rall(v) v.rbegin(), v.rend()
-
-// Function to calculate the maximum number of distinct placements of box S inside box B
 int calculateMaxPlacements(int x, int y, int z, int k)
 {
     int max_placements = 0;
@@ -16,12 +10,12 @@ int calculateMaxPlacements(int x, int y, int z, int k)
         {
             if (k % (length * 1LL * weight) != 0)
                 continue;
-
             int height = k / (length * 1LL * weight);
             if (height > z)
                 continue;
-
-            int placements_z = z + 1 - height, placements_y = y + 1 - weight, placements_x = x + 1 - length;
+            int placements_z = z + 1 - height;
+            int placements_y = y + 1 - weight;
+            int placements_x = x + 1 - length;
             int newVolume = placements_z * 1LL * placements_y * placements_x;
             max_placements = max(max_placements, newVolume);
         }
