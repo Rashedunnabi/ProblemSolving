@@ -11,9 +11,9 @@ int32_t main()
     {
         int n, i;
         cin >> n;
-        for (i = 0; i < n; i++)
-            cout << 1 << ' ';
-        cout << '\n';
+        for (i = 0; i < n - 1; i++)
+            cout << 3 << ' ';
+        cout << 1 << '\n';
     }
     return 0;
 }
