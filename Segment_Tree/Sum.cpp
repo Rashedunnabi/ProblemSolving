@@ -2,60 +2,59 @@
 using namespace std;
 
 #define int long long
-#define endl "\n"
 const int N = 1e5 + 2, MOD = 1e9 + 7;
 
 int tree[4 * N], a[N];
 
-void build(int node, int st, int en)
+void build(int node, int start, int end)
 {
-    if (st == en)
+    if (start == end)
     {
-        tree[node] = a[st];
+        tree[node] = a[start];
         return;
     }
 
-    int mid = (st + en) / 2;
-    build(2 * node, st, mid);
-    build(2 * node + 1, mid + 1, en);
+    int mid = (start + end) / 2;
+    build(2 * node, start, mid);
+    build(2 * node + 1, mid + 1, end);
 
     tree[node] = tree[2 * node] + tree[2 * node + 1];
 }
 
-int query(int node, int st, int en, int l, int r)
+int query(int node, int start, int end, int left, int right)
 {
-    if (en < l || st > r)
+    if (end < left || start > right)
     {
         return 0;
     }
 
-    if (l <= st && en <= r)
+    if (left <= start && end <= right)
         return tree[node];
 
-    int mid = (st + en) / 2;
-    int q1 = query(2 * node, st, mid, l, r);
-    int q2 = query(2 * node + 1, mid + 1, en, l, r);
+    int mid = (start + end) / 2;
+    int q1 = query(2 * node, start, mid, left, right);
+    int q2 = query(2 * node + 1, mid + 1, end, left, right);
 
     return q1 + q2;
 }
 
-void update(int node, int st, int en, int idx, int val)
+void update(int node, int start, int end, int idx, int val)
 {
-    if (st == en)
+    if (start == end)
     {
-        a[st] = val;
+        a[start] = val;
         tree[node] = val;
         return;
     }
 
-    int mid = (st + en) / 2;
+    int mid = (start + end) / 2;
     if (idx <= mid)
     {
-        update(2 * node, st, mid, idx, val);
+        update(2 * node, start, mid, idx, val);
     }
     else
     {
-        update(2 * node + 1, mid + 1, en, idx, val);
+        update(2 * node + 1, mid + 1, end, idx, val);
     }
 
     tree[node] = tree[2 * node] + tree[2 * node + 1];
@@ -63,6 +62,8 @@ void update(int node, int st, int en, int idx, int val)
 
 signed main()
 {
+    ios_base::sync_with_stdio(0), cin.tie(0);
+
     int n, m;
     cin >> n >> m;
 
@@ -87,7 +88,7 @@ signed main()
             int l, r;
             cin >> l >> r;
             int ans = query(1, 0, n - 1, l, r);
-            cout << ans << endl;
+            cout << ans << '\n';
         }
     }
     return 0;

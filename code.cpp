@@ -1,43 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-const int N = 1e5 + 7, mod = 1e9 + 7;
-int ar[N];
-
-long long power(long long a, long long b, long long m = 1e9 + 7)
-{
-    a %= m;
-    long long res = 1;
-    while (b > 0)
-    {
-        if (b & 1)
-            res = res * a % m;
-        a = a * a % m;
-        b >>= 1;
-    }
-    return res;
-}
 
 int32_t main()
 {
-    ios_base::sync_with_stdio(0), cin.tie(0);
+    ios::sync_with_stdio(false);
+    cin.tie(0);
 
-    int n, ratio, q, i;
-    cin >> n >> ratio >> q;
-
-    for (i = 0; i < q; i++)
+    int t;
+    cin >> t;
+    while (t--)
     {
-        int a, l, r;
-        cin >> a >> l >> r;
+        int x, y, z, k, ans = 0;
+        cin >> x >> y >> z >> k;
 
-        for (int j = l, c = 0; j <= r; j++, c++)
+        for (int i = 1; i <= x; i++)
         {
-            ar[j] += (a * power(ratio, c));
+            for (int j = 1; j <= y; j++)
+            {
+                int mul = i * j;
+                int expected_height = k / mul;
+                if (k % mul == 0)
+                {
+                    if (expected_height <= z)
+                    {
+                        int tot_x = x - i + 1;
+                        int tot_y = y - j + 1;
+                        int tot_z = z - expected_height + 1;
+                        ans = max(ans, tot_x * tot_y * tot_z);
+                    }
+                }
+            }
         }
+        cout << ans << endl;
     }
-    for (i = 1; i <= n; i++)
-        cout << ar[i] << ' ';
-    cout << '\n';
 
     return 0;
 }
