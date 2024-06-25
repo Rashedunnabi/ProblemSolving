@@ -1,38 +1,43 @@
 #include <bits/stdc++.h>
-#define ll long long int
 using namespace std;
-
+void testCase()
+{
+    int x, y, k;
+    cin >> x >> y >> k;
+    while (k > 0)
+    {
+        int nxt = (1 + x / y) * y;
+        if (nxt - x > k)
+        {
+            cout << x + k << "\n";
+            return;
+        }
+        k -= nxt - x;
+        while (nxt % y == 0)
+        {
+            nxt /= y;
+        }
+        x = nxt;
+        if (x == 1)
+        {
+            break;
+        }
+    }
+    if (k)
+    {
+        x += k % (y - 1);
+    }
+    cout << x << "\n";
+}
 int main()
 {
-    ios_base::sync_with_stdio(0), cin.tie(0);
-    int t;
-    cin >> t;
-    while (t--)
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int tc;
+    cin >> tc;
+    while (tc--)
     {
-        ll n, m, i;
-        cin >> n >> m;
-
-        vector<ll> arr(n + 4);
-
-        for (i = 0; i < m; i++)
-        {
-            ll a, b, k;
-            cin >> a >> b >> k;
-
-            arr[a] += k;
-            arr[b + 1] -= k;
-        }
-        for (i = 1; i <= n; i++)
-            arr[i] = arr[i] + arr[i - 1];
-
-        int q;
-        cin >> q;
-        while (q--)
-        {
-            int x;
-            cin >> x;
-            cout << arr[x] << '\n';
-        }
+        testCase();
     }
     return 0;
 }
