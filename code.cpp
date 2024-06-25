@@ -1,16 +1,38 @@
 #include <bits/stdc++.h>
+#define ll long long int
 using namespace std;
 
 int main()
 {
-    char arr[3][4];
-    memset(arr, 'x', sizeof(arr));
-    for (int i = 0; i < 3; i++)
+    ios_base::sync_with_stdio(0), cin.tie(0);
+    int t;
+    cin >> t;
+    while (t--)
     {
-        // cout << arr[i] << ' ';
-        for (int j = 0; j < 4; j++)
-            cout << arr[i][j] << ' ';
-        cout << '\n';
+        ll n, m, i;
+        cin >> n >> m;
+
+        vector<ll> arr(n + 4);
+
+        for (i = 0; i < m; i++)
+        {
+            ll a, b, k;
+            cin >> a >> b >> k;
+
+            arr[a] += k;
+            arr[b + 1] -= k;
+        }
+        for (i = 1; i <= n; i++)
+            arr[i] = arr[i] + arr[i - 1];
+
+        int q;
+        cin >> q;
+        while (q--)
+        {
+            int x;
+            cin >> x;
+            cout << arr[x] << '\n';
+        }
     }
     return 0;
 }
