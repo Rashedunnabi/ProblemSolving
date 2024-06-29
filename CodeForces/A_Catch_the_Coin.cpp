@@ -8,14 +8,17 @@ using namespace std;
 int32_t main()
 {
     ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
-    // #ifndef ONLINE_JUDGE
-    //     freopen("div7.in", "r", stdin);
-    //     freopen("div7.out", "w", stdout);
-    // #endif
     int t = 1;
     cin >> t;
     while (t--)
     {
+        int x, y;
+        cin >> x >> y;
+
+        if (y <= -2)
+            no;
+        else
+            yes;
     }
     return 0;
 }
