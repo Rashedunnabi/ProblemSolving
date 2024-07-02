@@ -2,25 +2,25 @@
 using namespace std;
 #define int long long
 
-vector<int> z_function(const string &s)
+vector<int> z_function(string s)
 {
     int n = s.size();
-    vector<int> z(n, 0);
+    vector<int> z(n);
     int l = 0, r = 0;
-    for (int i = 1; i < n; ++i)
+    for (int i = 1; i < n; i++)
     {
-        if (i <= r)
+        if (i < r)
         {
-            z[i] = min(r - i + 1, z[i - l]);
+            z[i] = min(r - i, z[i - l]);
         }
         while (i + z[i] < n && s[z[i]] == s[i + z[i]])
         {
             z[i]++;
         }
-        if (i + z[i] - 1 > r)
+        if (i + z[i] > r)
         {
             l = i;
-            r = i + z[i] - 1;
+            r = i + z[i];
         }
     }
     return z;
@@ -35,53 +35,27 @@ int32_t main()
     {
         string s;
         cin >> s;
-        int n = s.size();
-
-        if (n % 2 != 0)
+        int n = s.length();
+        if (n & 1)
         {
-            cout << 0 << endl;
+            cout << 0 << '\n';
             continue;
         }
 
-        vector<int> z = z_function(s);
-        vector<int> start_P;
-        for (int i = 0; i < n; ++i)
-        {
-            if (i <= z[i])
-            {
-                start_P.push_back(i);
-            }
-        }
+        string t = s;
+        reverse(t.begin(), t.end());
 
-        reverse(s.begin(), s.end());
-        vector<int> z_rev = z_function(s);
-        reverse(s.begin(), s.end());
+        auto prefix = z_function(s);
+        auto suffix = z_function(t);
 
-        vector<int> start_R;
-        for (int i = 0; i < n; ++i)
-        {
-            if (i <= z_rev[i])
-            {
-                start_R.push_back(n - i - 1);
-            }
-        }
-
-        set<int> s_set(start_R.begin(), start_R.end());
         int ans = 0;
-
-        for (int i : start_P)
+        for (int p = 0; p <= (n / 2); p++) // p size of P,,,r size of R
         {
-            int end = 2 * i;
-            int size = (n - 1) - end + 1;
-            size = size / 2;
-            int coord = (n - 1) - size;
-            if (s_set.find(coord) != s_set.end())
-            {
+            int r = (n / 2) - p;
+            if (prefix[p] >= p && suffix[r] >= r)
                 ans++;
-            }
         }
-
-        cout << ans << endl;
+        cout << ans << '\n';
     }
     return 0;
 }
