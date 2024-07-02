@@ -1,34 +1,29 @@
-#include <iostream>
-#include <cmath>
+#include <bits/stdc++.h>
 using namespace std;
-
-long long kthCard(long long n, long long k)
+#define int long long
+int32_t main()
 {
-    long long odd_count = (n + 1) / 2;
-    if (k <= odd_count)
-    {
-        // kth card is an odd number
-        return 2 * (k - 1) + 1;
-    }
-    else
-    {
-        k -= odd_count;
-        long long remaining_odd_multiples = (n - odd_count) / 2;
-        long long group = (k + remaining_odd_multiples - 1) / remaining_odd_multiples;
-        long long odd_multiple = 2 * group + 1;
-        return odd_multiple * ((k - 1) % remaining_odd_multiples) + 2 * (group - 1);
-    }
-}
-
-int main()
-{
-    int t;
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+    int t = 1;
     cin >> t;
     while (t--)
     {
-        long long n, k;
+        int n, k, ans = 0;
         cin >> n >> k;
-        cout << kthCard(n, k) << endl;
+
+        int numOfOdd = (n + 1) / 2;
+        for (int i = 0; i < 32; i++)
+        {
+            int numOfValue = n / (1LL << i);
+            numOfOdd = (numOfValue + 1) / 2;
+            if (k <= numOfOdd)
+            {
+                ans = (2 * k - 1) * (1LL << i);
+                break;
+            }
+            k -= numOfOdd;
+        }
+        cout << ans << '\n';
     }
     return 0;
 }
