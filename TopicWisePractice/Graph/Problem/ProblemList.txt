@@ -1,0 +1,21 @@
+1.Connected Components on graph - HeakerEarth,GFG
+2.Detect cycle on graph - GFG
+3.Flood Fill--leetcode
+4.Number of Island--leetcode
+5.PreComputation on subtree-- some of subtree,number of prime in subtree,number of even-odd in subtree
+6. Diameter of a tree
+7.LCA-Lowest common ancestor of a tree
+8.Delet Edge - InterviewBit
+9.Shortest Path using BFS- Spoj nakanj-minimum knight
+10.Chef and Reversing--CodeChef
+11.Capitalizm and Sociolism--CodeChef
+12.Network Delay-Leetcode
+13.Greg and Graph --Codeforces
+14.Code Monk Disjoint Set Union - HackerEarth
+15.Shichikuji and Power Grid--CodeForce
+
+Shanket Singh
+Find path exist
+All path between two vertices
+tree cutting--cf
+Secret password-dsu-cf
