@@ -1,0 +1,38 @@
+{
+	"DisjointSetUnion": {
+		"prefix": "DisjointSetUnion",
+		"body": [
+			"",
+			"const int N = 1e5 + 7;",
+			"int parent[N], Size[N];",
+			"void make(int v)",
+			"{",
+			"    parent[v] = v;",
+			"    Size[v] = 1;",
+			"}",
+			"",
+			"int Find(int v)",
+			"{",
+			"    if (v == parent[v])",
+			"        return v;",
+			"    return parent[v] = Find(parent[v]); // path compression",
+			"}",
+			"",
+			"void Union(int a, int b)",
+			"{",
+			"    a = Find(a);",
+			"    b = Find(b);",
+			"    if (a == b)",
+			"        return;",
+			"",
+			"    // Union by size",
+			"    if (Size[a] < Size[b])",
+			"        swap(a, b);",
+			"    parent[b] = a;",
+			"    Size[a] += Size[b];",
+			"}",
+			"//  Before using DSU make sure you call the make function"
+		],
+		"description": "DisjointSetUnion"
+	}
+}

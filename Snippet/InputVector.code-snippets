@@ -1,0 +1,13 @@
+{
+	"Taking input in a vector": {
+		"prefix": "InputVector",
+		"body": [
+		  "int n, i;",
+		  "cin >> n;",
+		  "vector<int> v(n);",
+		  "for (int &i : v)",
+			"    cin >> i;",
+		],
+		"description": "Taking input in a vector"
+	  }
+}

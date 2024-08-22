@@ -1,0 +1,11 @@
+{
+	"Showing Output of a vector": {
+		"prefix": "OutputVector",
+		"body": [
+		  "for (auto val : v)",
+		  "  cout << val << ' ';",
+		  "cout << '\\n';"
+		],
+		"description": "Showing Output of a vector"
+	  }
+}
