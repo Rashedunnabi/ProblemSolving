@@ -3,70 +3,38 @@ using namespace std;
 class Solution
 {
 public:
-    // paste code here
-    string smallestWindow(string s, string p)
+    long long int maxSumWithK(long long int ar[], long long int n, long long int k)
     {
-        map<char, int> mp;
-        int j = 0, cnt = 0, window = INT_MAX, index = INT_MAX, k = p.length();
-
-        for (int i = 0; i < (int)p.length(); i++)
-        {
-            mp[p[i]]++;
-            if (mp[p[i]] == 1)
-                cnt++;
-        }
+        int sum = 0, ans = LONG_LONG_MIN, j = 0, last = 0;
         for (int i = 0; i < k; i++)
+            sum += ar[i];
+        ans = max(ans, sum);
+        for (int i = k; i < n; i++)
         {
-            if (mp.find(s[i]) != mp.end())
+            sum += ar[i];
+            last += ar[j++];
+            ans = max(ans, sum);
+            if (last < 0)
             {
-                mp[s[i]]--;
-                if (mp[s[i]] == 0)
-                    cnt--;
+                sum -= last;
+                ans = max(sum, ans);
+                last = 0;
             }
         }
-        if (cnt == 0)
-            window = k, index = 0;
-
-        for (int i = k; i < s.length(); i++)
-        {
-            if (mp.find(s[i]) != mp.end())
-            {
-                mp[s[i]]--;
-                if (mp[s[i]] == 0)
-                    cnt--;
-            }
-            if (cnt == 0)
-            {
-                if (window > i - j + 1)
-                {
-                    window = i - j + 1;
-                    index = max(0, j - 1);
-                }
-            }
-        }
-
-        if (window == INT_MAX)
-            return "-1";
-
-        cout << index << ' ' << window << '\n';
-
-        string ss;
-        for (int i = index; i < index + window; i++)
-            ss.push_back(s[i]);
-        return ss;
+        return ans;
     }
 };
 
 int main()
 {
-    int t = 1;
-    // cin >> t;
-    while (t--)
-    {
-        string s, p;
-        cin >> s >> p;
-        Solution ob;
-        cout << ob.smallestWindow(s, p) << '\n';
-    }
+    long long n, k;
+    cin >> n >> k;
+    long long ar[n];
+    for (int i = 0; i < n; i++)
+        cin >> ar[i];
+
+    Solution ob;
+    cout << ob.maxSumWithK(ar, n, k) << '\n';
+
     return 0;
 }
