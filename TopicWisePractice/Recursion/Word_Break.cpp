@@ -11,15 +11,14 @@ public:
             return true;
         if (mp.find(s) != mp.end())
             return mp[s];
-        for (string &word : ar)
+
+        for (auto word : ar)
         {
-            string ss = s.substr(0, word.length());
-            if (ss == word && func(s.substr(word.length()), ar))
+            if (s.substr(0, word.length()) == word && func(s.substr(word.length()), ar))
                 return mp[s] = true;
         }
         return mp[s] = false;
     }
-
     bool wordBreak(string s, vector<string> &ar)
     {
         return func(s, ar);
