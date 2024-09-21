@@ -1,48 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-bool check(vector<int> &arr, int mid, int m)
+class Solution
 {
-    int cnt = 0, sum = 0, n = arr.size();
-    for (int i = 0; i < n; i++)
+public:
+    int longestMountain(int *arr, int n)
     {
-        if (sum + arr[i] > mid)
+        int i = 0, ans = 0;
+        while (i < n)
         {
-            cnt++;
-            sum = arr[i];
+            int pre = i, c1 = 0, c2 = 0;
+            while (i + 1 < n && arr[i + 1] > arr[i])
+                i++, c1 = 1;
+            while (i + 1 < n && arr[i] > arr[i + 1])
+                i++, c2 = 1;
+            if (c1 + c2 == 2)
+                ans = max(ans, i - pre + 1);
+            if (i == pre)
+                i++;
         }
-        else
-            sum += arr[i];
+        return ans;
     }
-    if (sum)
-        cnt++;
-    return cnt <= m;
-}
-
-int findPages(vector<int> &arr, int n, int m)
-{
-    if (m > n)
-        return -1;
-
-    int lo = *max_element(arr.begin(), arr.end()) - 1, hi = accumulate(arr.begin(), arr.end(), 0) + 10;
-    while (hi - lo > 1)
-    {
-        int mid = lo + (hi - lo) / 2;
-        if (check(arr, mid, m))
-            hi = mid;
-        else
-            lo = mid;
-    }
-    return hi;
-}
+};
 
 int main()
 {
-    int n, k;
-    cin >> n >> k;
-    vector<int> v(n);
-    for (int &i : v)
-        cin >> i;
-    cout << findPages(v, n, k) << '\n';
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        int arr[n];
+        for (int i = 0; i < n; i++)
+            cin >> arr[i];
+        Solution ob;
+        cout << ob.longestMountain(arr, n) << '\n';
+    }
     return 0;
 }
