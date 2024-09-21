@@ -1,40 +1,54 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Solution
-{
-public:
-    int longestMountain(int *arr, int n)
-    {
-        int i = 0, ans = 0;
-        while (i < n)
-        {
-            int pre = i, c1 = 0, c2 = 0;
-            while (i + 1 < n && arr[i + 1] > arr[i])
-                i++, c1 = 1;
-            while (i + 1 < n && arr[i] > arr[i + 1])
-                i++, c2 = 1;
-            if (c1 + c2 == 2)
-                ans = max(ans, i - pre + 1);
-            if (i == pre)
-                i++;
-        }
-        return ans;
-    }
-};
+#define int long long
+#define yes cout << "YES\n"
+#define no cout << "NO\n"
 
-int main()
+int32_t main()
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
     int t;
     cin >> t;
+
     while (t--)
     {
-        int n;
-        cin >> n;
-        int arr[n];
-        for (int i = 0; i < n; i++)
-            cin >> arr[i];
-        Solution ob;
-        cout << ob.longestMountain(arr, n) << '\n';
+        int n, d, k;
+        cin >> n >> d >> k;
+        vector<pair<int, int>> jobs(k);
+        for (int i = 0; i < k; i++)
+        {
+            cin >> jobs[i].first >> jobs[i].second;
+        }
+        sort(jobs.begin(), jobs.end());
+        auto calc_overlap = [&](int start)
+        {
+            int cnt = 0;
+            for (auto job : jobs)
+            {
+                if (max(job.first, start) <= min(job.second, start + d - 1))
+                    cnt++;
+            }
+            return cnt;
+        };
+
+        int maxi = 0, mini = k + 1, bro = 1, mom = 1;
+        for (int i = 1; i <= n - d + 1; i++)
+        {
+            int val = calc_overlap(i);
+            if (val > maxi)
+            {
+                maxi = val;
+                bro = i;
+            }
+            if (val < mini)
+            {
+                mini = val;
+                mom = i;
+            }
+        }
+        cout << bro << ' ' << mom << '\n';
     }
+
     return 0;
 }
