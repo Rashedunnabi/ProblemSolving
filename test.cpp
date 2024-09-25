@@ -1,36 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Solution
+
+string solve(int A)
 {
-public:
-    string getPermutation(int n, int k)
+    if (A == 0 || A == 1)
+        return "1";
+
+    vector<int> result;
+    result.push_back(1);
+
+    for (int i = 2; i <= A; ++i)
     {
-        string ans;
-        vector<int> v;
-        int fact = 1;
-        for (int i = 1; i <= n; i++)
+        int carry = 0;
+        for (int j = 0; j < result.size(); ++j)
         {
-            fact *= i;
-            v.push_back(i);
+            int product = result[j] * i + carry;
+            result[j] = product % 10;
+            carry = product / 10;
         }
-        k--;
-        while (v.size())
+
+        while (carry)
         {
-            fact = fact / v.size();
-            int idx = k / fact;
-            k %= fact;
-            char ch = v[idx] + '0';
-            ans.push_back(ch);
-            v.erase(v.begin() + idx);
+            result.push_back(carry % 10);
+            carry /= 10;
         }
-        return ans;
     }
-};
-int main()
+
+    string factorial = "";
+    for (int i = result.size() - 1; i >= 0; --i)
+        factorial += to_string(result[i]);
+
+    return factorial;
+}
+
+int32_t main()
 {
-    int n, k;
-    cin >> n >> k;
-    Solution ob;
-    cout << ob.getPermutation(n, k) << '\n';
+    int n;
+    cin >> n;
+
+    cout << solve(n) << '\n';
     return 0;
 }

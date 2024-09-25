@@ -1,54 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
 
 int32_t main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    int t;
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+    int t = 1;
     cin >> t;
-
     while (t--)
     {
-        int n, d, k;
-        cin >> n >> d >> k;
-        vector<pair<int, int>> jobs(k);
-        for (int i = 0; i < k; i++)
-        {
-            cin >> jobs[i].first >> jobs[i].second;
-        }
-        sort(jobs.begin(), jobs.end());
-        auto calc_overlap = [&](int start)
-        {
-            int cnt = 0;
-            for (auto job : jobs)
-            {
-                if (max(job.first, start) <= min(job.second, start + d - 1))
-                    cnt++;
-            }
-            return cnt;
-        };
+        int n, i;
+        cin >> n;
+        vector<int> v(n);
+        for (int &i : v)
+            cin >> i;
 
-        int maxi = 0, mini = k + 1, bro = 1, mom = 1;
-        for (int i = 1; i <= n - d + 1; i++)
+        set<vector<int>> st;
+
+        int cnt = 0;
+
+        for (int i = 0; i < n; i++)
         {
-            int val = calc_overlap(i);
-            if (val > maxi)
+            for (int j = 0; j < n; j++)
             {
-                maxi = val;
-                bro = i;
-            }
-            if (val < mini)
-            {
-                mini = val;
-                mom = i;
+                for (int k = 0; k < n; k++)
+                {
+                    for (int l = 0; l < n; l++)
+                    {
+                        if (i == j || i == k || i == l || j == k || j == l || k == l)
+                            continue;
+
+                        int a = v[i] ^ v[j];
+                        int b = v[j] ^ v[k];
+                        int c = v[k] ^ v[l];
+                        int d = v[l] ^ v[i];
+                        if (a == c && b == d && a > 0 && b > 0)
+                            cnt++;
+                    }
+                }
             }
         }
-        cout << bro << ' ' << mom << '\n';
+        cout << cnt << '\n';
     }
-
     return 0;
 }
