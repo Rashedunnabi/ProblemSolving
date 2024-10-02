@@ -1,55 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define int long long
 
-double findMedianSortedArrays(vector<int> &a, vector<int> &b)
+void func(int x)
 {
-    int n1 = a.size(), n2 = b.size();
-    if (n1 > n2)
-        return findMedianSortedArrays(b, a);
-    int n = n1 + n2;
-    int left = (n + 1) / 2;
-    int lo = 0, hi = n1;
-    while (lo <= hi)
+    vector<int> v(1000, 0);
+    int cnt = 0;
+    for (int i = 2; i <= 400; i++)
     {
-        int mid1 = (hi + lo) / 2;
-        int l1 = INT_MIN, l2 = INT_MIN;
-        int r1 = INT_MAX, r2 = INT_MAX;
-        int mid2 = left - mid1;
-        if (mid1 - 1 >= 0)
-            l1 = a[mid1 - 1];
-        if (mid2 - 1 >= 0)
-            l2 = b[mid2 - 1];
-        if (mid1 < n1)
-            r1 = a[mid1];
-        if (mid2 < n2)
-            r2 = b[mid2];
-
-        if (l1 <= r2 && l2 <= r1)
+        for (int j = i; j < 400; j += i)
         {
-            if (n & 1)
-                return max(l1, l2);
-            else
-                return double(max(l1, l2) + min(r1, r2)) / 2.0;
+            v[j] ^= 1;
         }
-        else if (l1 > r2)
-            hi = mid1 - 1;
-        else
-            lo = mid1 + 1;
+        int cnt = 0;
+        for (int k = 0; k <= i; k++)
+            cnt += v[k] == 1;
+        if (cnt == x)
+        {
+            cout << "for: " << x << ' ' << i << '\n';
+            return;
+        }
     }
-    return 0.0;
 }
 
-int main()
+int32_t main()
 {
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
 
-    int n, m;
-    cin >> n >> m;
-    vector<int> a(n), b(m);
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-    for (int i = 0; i < m; i++)
-        cin >> b[i];
+    for (int x = 1; x <= 100; x++)
+    {
+        func(x);
+    }
 
-    cout << findMedianSortedArrays(a, b) << '\n';
     return 0;
 }

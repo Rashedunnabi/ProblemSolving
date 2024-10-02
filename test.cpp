@@ -1,43 +1,18 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <cmath> // For sqrt() function
 
-string solve(int A)
+int countPerfectSquares(int n)
 {
-    if (A == 0 || A == 1)
-        return "1";
-
-    vector<int> result;
-    result.push_back(1);
-
-    for (int i = 2; i <= A; ++i)
-    {
-        int carry = 0;
-        for (int j = 0; j < result.size(); ++j)
-        {
-            int product = result[j] * i + carry;
-            result[j] = product % 10;
-            carry = product / 10;
-        }
-
-        while (carry)
-        {
-            result.push_back(carry % 10);
-            carry /= 10;
-        }
-    }
-
-    string factorial = "";
-    for (int i = result.size() - 1; i >= 0; --i)
-        factorial += to_string(result[i]);
-
-    return factorial;
+    return std::floor(std::sqrt(n));
 }
 
-int32_t main()
+int main()
 {
     int n;
-    cin >> n;
+    std::cin >> n;
 
-    cout << solve(n) << '\n';
+    int result = countPerfectSquares(n);
+    std::cout << "Number of perfect squares between 1 and " << n << " is: " << result << std::endl;
+
     return 0;
 }
