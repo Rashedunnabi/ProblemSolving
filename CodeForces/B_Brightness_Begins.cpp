@@ -9,24 +9,11 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        int x;
-        cin >> x;
-        int lo = 1, hi = 2e18 + 7, ans = 0;
-        while (hi >= lo)
-        {
-            int mid = lo + (hi - lo) / 2;
-            int p = sqrtl(mid);
-            while (p * 1LL * p > mid)
-                p--;
-            while ((p + 1) * 1LL * (p + 1) <= mid)
-                p++;
-            int val = mid - p;
-            if (val >= x)
-                hi = mid - 1, ans = mid;
-            else
-                lo = mid + 1;
-        }
-        cout << ans << '\n';
+        int n;
+        cin >> n;
+        int x = round(sqrtl(n));
+        n += x;
+        cout << n << '\n';
     }
     return 0;
 }
