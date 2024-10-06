@@ -1,18 +1,12 @@
-#include <iostream>
-#include <cmath> // For sqrt() function
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
 
-int countPerfectSquares(int n)
+int32_t main()
 {
-    return std::floor(std::sqrt(n));
-}
-
-int main()
-{
-    int n;
-    std::cin >> n;
-
-    int result = countPerfectSquares(n);
-    std::cout << "Number of perfect squares between 1 and " << n << " is: " << result << std::endl;
+    ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(NULL);
+    int t = 1;
+    cin >> t;
 
     return 0;
 }
