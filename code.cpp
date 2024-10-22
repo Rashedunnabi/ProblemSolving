@@ -1,32 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
 
-bool cmp(pair<int, int> &a, pair<int, int> &b)
+int maximumChocolates(int n, int m, vector<vector<int>> &grid)
 {
-    return max(a.first, a.second) < max(b.first, b.second);
-}
-
-int32_t main()
-{
-    ios_base::sync_with_stdio(0), cin.tie(0);
-    int t = 1;
-    cin >> t;
-    while (t--)
+    int dp[n][m][m];
+    for (int i = -1; i <= 1; i++)
     {
-        int n;
-        cin >> n;
-        vector<pair<int, int>> vp(n);
-        for (int i = 0; i < n; ++i)
+        for (int j = -1; j <= 1; j++)
         {
-            int a, b;
-            cin >> a >> b;
-            vp[i] = {a, b};
+            if (i == j)
+                dp[n - 1][i][j] = grid[n - 1][j];
+            else
+                dp[n - 1][i][j] = grid[n - 1][i] + grid[n - 1][j];
         }
-        sort(vp.begin(), vp.end(), cmp);
-        for (auto &val : vp)
-            cout << val.first << " " << val.second << " ";
-        cout << "\n";
     }
-    return 0;
+
+    for (int i = n - 2; i >= 0; i--)
+    {
+        for (int j1 = 0; j1 < m; j1++)
+        {
+            for (int j2 = 0; j2 < m; j2++)
+            {
+                int maxi = INT_MIN;
+                for (int di = -1; di <= 1; di++)
+                {
+                    for (int dj = -1; dj <= 1; dj++)
+                    {
+                        int newJ1 = j1 + di;
+                        int newJ2 = j2 + dj;
+                        if (newJ1 >= 0 && newJ2 >= 0 && newJ1 < m &&
+                            newJ2 < m) {
+                          int currentValue;
+                          if (j1 == j2)
+                            currentValue = grid[i][j1];
+                          else
+                            currentValue = grid[i][j1] + grid[i][j2];
+
+                          currentValue += dp[i + 1][newJ1][newJ2];
+                          maxi = max(maxi + 0LL, currentValue);
+                        }
+                    }
+                }
+                dp[i][j1][j2] = maxi;
+            }
+        }
+    }
+    return dp[0][0][m-1];
 }
