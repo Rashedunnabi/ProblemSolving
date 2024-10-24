@@ -1,49 +1,52 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
 using namespace std;
 
-int maximumChocolates(int n, int m, vector<vector<int>> &grid)
+int main()
 {
-    int dp[n][m][m];
-    for (int i = -1; i <= 1; i++)
+    vector<pair<int, int>> intervals;
+    int n, maxi = 1;
+    cin >> n;
+    for (int i = 0; i < n; i++)
     {
-        for (int j = -1; j <= 1; j++)
+        int x, y;
+        cin >> x >> y;
+        intervals.push_back({x, y});
+        maxi = max(maxi, max(x, y));
+    }
+
+    vector<int> diff(maxi + 1, 0); // Difference array
+    // Processing the intervals
+    for (const auto &interval : intervals)
+    {
+        int l = interval.first - 1; // Convert to 0-based index
+        int r = interval.second - 1;
+        int value = r - l + 1;
+
+        // Mark the start and end of the range in the difference array
+        diff[l] = max(diff[l], value); // Update start of range
+        if (r + 1 < maxi)
         {
-            if (i == j)
-                dp[n - 1][i][j] = grid[n - 1][j];
-            else
-                dp[n - 1][i][j] = grid[n - 1][i] + grid[n - 1][j];
+            diff[r + 1] = max(diff[r + 1], 0); // Update after the range to stop the effect
         }
     }
 
-    for (int i = n - 2; i >= 0; i--)
+    // Create final array by applying prefix max
+    vector<int> ar(maxi, 0);
+    ar[0] = diff[0];
+    for (int i = 1; i < maxi; i++)
     {
-        for (int j1 = 0; j1 < m; j1++)
-        {
-            for (int j2 = 0; j2 < m; j2++)
-            {
-                int maxi = INT_MIN;
-                for (int di = -1; di <= 1; di++)
-                {
-                    for (int dj = -1; dj <= 1; dj++)
-                    {
-                        int newJ1 = j1 + di;
-                        int newJ2 = j2 + dj;
-                        if (newJ1 >= 0 && newJ2 >= 0 && newJ1 < m &&
-                            newJ2 < m) {
-                          int currentValue;
-                          if (j1 == j2)
-                            currentValue = grid[i][j1];
-                          else
-                            currentValue = grid[i][j1] + grid[i][j2];
-
-                          currentValue += dp[i + 1][newJ1][newJ2];
-                          maxi = max(maxi + 0LL, currentValue);
-                        }
-                    }
-                }
-                dp[i][j1][j2] = maxi;
-            }
-        }
+        ar[i] = max(ar[i - 1], diff[i]); // Prefix max to propagate maximum values
     }
-    return dp[0][0][m-1];
+
+    // Output the result
+    for (int i = 0; i < maxi; i++)
+    {
+        cout << ar[i] << ' ';
+    }
+    cout << '\n';
+
+    return 0;
 }
