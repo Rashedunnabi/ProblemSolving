@@ -1,52 +1,72 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
+#define int long long
 
-int main()
+int query(int a, int b)
 {
-    vector<pair<int, int>> intervals;
-    int n, maxi = 1;
-    cin >> n;
-    for (int i = 0; i < n; i++)
-    {
-        int x, y;
-        cin >> x >> y;
-        intervals.push_back({x, y});
-        maxi = max(maxi, max(x, y));
-    }
+    int x;
+    cout << "? " << a << ' ' << b << '\n';
+    cin >> x;
+    return x;
+}
 
-    vector<int> diff(maxi + 1, 0); // Difference array
-    // Processing the intervals
-    for (const auto &interval : intervals)
+int32_t main()
+{
+    int t = 1;
+    cin >> t;
+    while (t--)
     {
-        int l = interval.first - 1; // Convert to 0-based index
-        int r = interval.second - 1;
-        int value = r - l + 1;
+        int n;
+        cin >> n;
+        vector<int> p(n + 1);
 
-        // Mark the start and end of the range in the difference array
-        diff[l] = max(diff[l], value); // Update start of range
-        if (r + 1 < maxi)
+        vector<int> graph[n + 1];
+        graph[0].push_back(1);
+        graph[1].push_back(0);
+
+        int leftPre = 1, rightPre = 0;
+        for (int index = 2; index < n; index++)
         {
-            diff[r + 1] = max(diff[r + 1], 0); // Update after the range to stop the effect
+            int flag = query(1, index);
+            if (flag)
+            {
+                graph[rightPre].push_back(index);
+                graph[index].push_back(rightPre);
+                rightPre = index;
+            }
+            else
+            {
+                graph[leftPre].push_back(index);
+                graph[index].push_back(leftPre);
+                leftPre = index;
+            }
         }
-    }
 
-    // Create final array by applying prefix max
-    vector<int> ar(maxi, 0);
-    ar[0] = diff[0];
-    for (int i = 1; i < maxi; i++)
-    {
-        ar[i] = max(ar[i - 1], diff[i]); // Prefix max to propagate maximum values
-    }
+        // while (index < n)
+        // {
+        //     graph[leftPre].push_back(index);
+        //     graph[index].push_back(leftPre);
+        //     leftPre = index++;
 
-    // Output the result
-    for (int i = 0; i < maxi; i++)
-    {
-        cout << ar[i] << ' ';
-    }
-    cout << '\n';
+        //     if (index == n)
+        //         break;
 
+        //     graph[rightPre].push_back(index);
+        //     graph[index].push_back(rightPre);
+        //     rightPre = index++;
+
+        //     if (index == n)
+        //         break;
+        // }
+
+        for (int i = 0; i < n; i++)
+        {
+            cout << i << " : ";
+            for (auto vv : graph[i])
+                cout << vv << ' ';
+            cout << '\n';
+        }
+        cout << '\n';
+    }
     return 0;
 }
