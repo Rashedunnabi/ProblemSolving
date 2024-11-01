@@ -1,7 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
-
 int32_t main()
 {
     ios_base::sync_with_stdio(0), cin.tie(0);
@@ -11,25 +9,24 @@ int32_t main()
     {
         int n;
         cin >> n;
-
-        if (n == 1 || n == 3)
+        if (n == 1 or n == 3)
         {
             cout << -1 << '\n';
             continue;
         }
-        if (n == 2)
+
+        if (n & 1)
         {
-            cout << "66\n";
-            continue;
+            for (int i = 0; i < (n - 4); i++)
+                cout << 3;
+            cout << 6366 << '\n';
         }
-        if (n == 4)
+        else
         {
-            cout << "3366\n";
-            continue;
+            for (int i = 0; i < n - 2; i++)
+                cout << 3;
+            cout << 66 << '\n';
         }
-        for (int i = 0; i < n - 4; i++)
-            cout << "3";
-        cout << "6366\n";
     }
     return 0;
 }

@@ -19,7 +19,6 @@ int32_t main()
         for (int i = 0; i < n; i++)
         {
             int newValue = v[i] + (cnt == 0 ? 0 : round(pow(2, cnt)));
-            sum = ans +
         }
     }
     return 0;

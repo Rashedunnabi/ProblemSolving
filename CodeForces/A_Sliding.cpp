@@ -9,11 +9,11 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        int n, m, r, c, ans = 0;
+        int n, m, r, c, ans;
         cin >> n >> m >> r >> c;
-        int upore = m - c;
-        int niche = (n - r) * (2 * m - 1);
-        ans = upore + niche;
+        int up = m - c;
+        int down = (n - r) * (2 * m - 1);
+        ans = up + down;
         cout << ans << '\n';
     }
     return 0;
