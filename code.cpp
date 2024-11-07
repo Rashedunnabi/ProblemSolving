@@ -38,6 +38,34 @@ bool exist(vector<vector<char>> &board, string word)
     return flag;
 }
 
+const int N = 1e6 + 7;
+vector<int> spf(N + 1, 1);
+void sieve()
+{
+    spf[0] = 0;
+    for (int i = 2; i <= N; i++)
+    {
+        if (spf[i] == 1)
+        {
+            for (int j = i; j <= N; j += i)
+            {
+                if (spf[j] == 1)
+                    spf[j] = i;
+            }
+        }
+    }
+}
+vector<int> getFactorization(int x)
+{
+    vector<int> res;
+    while (x != 1)
+    {
+        res.push_back(spf[x]);
+        x = x / spf[x];
+    }
+    return res;
+}
+
 int32_t main()
 {
     ios_base::sync_with_stdio(0), cin.tie(0);
