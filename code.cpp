@@ -1,71 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-bool isValid(int i, int j, int n, int m, vector<vector<bool>> &vis)
-{
-    return i >= 0 && j >= 0 && i < n && j < m && !vis[i][j];
-}
-bool func(int i, int j, int k, vector<vector<bool>> &vis, vector<vector<char>> &board, string &word)
-{
-    int n = board.size(), m = board[0].size();
-
-    if (k == word.length())
-        return true;
-    if (!isValid(i, j, n, m, vis) || board[i][j] != word[k])
-        return false;
-
-    bool flag = 0;
-    vis[i][j] = true;
-
-    flag |= func(i, j + 1, k + 1, vis, board, word);
-    flag |= func(i + 1, j, k + 1, vis, board, word);
-    flag |= func(i, j - 1, k + 1, vis, board, word);
-    flag |= func(i - 1, j, k + 1, vis, board, word);
-
-    vis[i][j] = false;
-    return flag;
-}
-bool exist(vector<vector<char>> &board, string word)
-{
-    int n = board.size(), m = board[0].size();
-    vector<vector<bool>> vis(n, vector<bool>(m));
-    bool flag = false;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
-            flag |= func(i, j, 0, vis, board, word);
-    }
-    return flag;
-}
-
-const int N = 1e6 + 7;
-vector<int> spf(N + 1, 1);
-void sieve()
-{
-    spf[0] = 0;
-    for (int i = 2; i <= N; i++)
-    {
-        if (spf[i] == 1)
-        {
-            for (int j = i; j <= N; j += i)
-            {
-                if (spf[j] == 1)
-                    spf[j] = i;
-            }
-        }
-    }
-}
-vector<int> getFactorization(int x)
-{
-    vector<int> res;
-    while (x != 1)
-    {
-        res.push_back(spf[x]);
-        x = x / spf[x];
-    }
-    return res;
-}
-
+#define int long long
+#define yes cout << "YES\n"
+#define no cout << "NO\n"
+#define all(v) v.begin(), v.end()
+#define rall(v) v.rbegin(), v.rend()
 int32_t main()
 {
     ios_base::sync_with_stdio(0), cin.tie(0);
@@ -73,16 +12,7 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        int n, m;
-        cin >> n >> m;
-        vector<vector<char>> v(n, vector<char>(m));
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-                cin >> v[i][j];
-        }
-
-        cout << exist(v, "1543") << '\n';
+        cout << t << '\n';
     }
     return 0;
 }
