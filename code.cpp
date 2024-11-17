@@ -1,18 +1,59 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
-#define all(v) v.begin(), v.end()
-#define rall(v) v.rbegin(), v.rend()
-int32_t main()
+
+int get(int l, int r)
 {
-    ios_base::sync_with_stdio(0), cin.tie(0);
-    int t = 1;
+    int x;
+    cout << "? " << l << " " << r << endl;
+    cin >> x;
+    return x;
+}
+
+void solve()
+{
+    int n;
+    cin >> n;
+
+    vector<int> f(n);
+    for (int i = 2; i <= n; i++)
+    {
+        f[i - 1] = get(1, i);
+    }
+
+    string result(n, '0');
+    int count_zeros = 0, count_ones = 0;
+
+    for (int i = 1; i < n; i++)
+    {
+        if (f[i] == count_zeros + count_ones)
+        {
+            result[i] = '0';
+            count_zeros++;
+        }
+        else
+        {
+            result[i] = '1';
+            count_ones += count_zeros;
+        }
+    }
+
+    if (count_zeros + count_ones != f[n - 1])
+    {
+        cout << "! IMPOSSIBLE" << endl;
+    }
+    else
+    {
+        cout << "! " << result << endl;
+    }
+}
+
+int main()
+{
+    int t;
     cin >> t;
     while (t--)
     {
-        cout << t << '\n';
+        solve();
     }
     return 0;
 }
